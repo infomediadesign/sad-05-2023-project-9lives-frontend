@@ -3,23 +3,25 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import './Login.css';
+import './Register.css';
 
-const Login = () => {
+const Register = ({ onRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    console.log('Logging in...', email, password);
-    // Perform login logic here, e.g., API call
+    console.log('Registering...', email, password);
+    // Perform registration logic here, e.g., API call
+    // After successful registration, invoke the onRegister callback
+    onRegister();
   };
 
   return (
     <Card className="card">
       <CardContent>
-        <h2>Login/Sign-in</h2>
-        <form onSubmit={handleLogin}>
+        <h2>Register</h2>
+        <form onSubmit={handleRegister}>
           <div className="input-group">
             <TextField
               type="email"
@@ -35,7 +37,7 @@ const Login = () => {
             />
           </div>
           <Button type="submit" variant="contained" fullWidth>
-            Login
+            Register
           </Button>
         </form>
       </CardContent>
@@ -43,4 +45,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
