@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
@@ -12,8 +13,7 @@ const Register = ({ onRegister }) => {
   const handleRegister = (e) => {
     e.preventDefault();
     console.log('Registering...', email, password);
-    // Perform registration logic here, e.g., API call
-    // After successful registration, invoke the onRegister callback
+  
     onRegister();
   };
 
@@ -39,6 +39,12 @@ const Register = ({ onRegister }) => {
           <Button type="submit" variant="contained" fullWidth>
             Register
           </Button>
+          <p className='message'>
+            Already have an account? {' '}
+            <Link to="/login" className="linkto">
+              Sign in
+            </Link>
+          </p>
         </form>
       </CardContent>
     </Card>

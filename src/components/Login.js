@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
@@ -12,7 +13,7 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log('Logging in...', email, password);
-    // Perform login logic here, e.g., API call
+
   };
 
   return (
@@ -37,6 +38,12 @@ const Login = () => {
           <Button type="submit" variant="contained" fullWidth>
             Login
           </Button>
+          <p className='message'>
+            Create a new account{' '}
+            <Link to='/register' className='link'>
+              Register
+            </Link>
+          </p>
         </form>
       </CardContent>
     </Card>

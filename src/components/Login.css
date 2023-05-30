@@ -6,6 +6,7 @@
   }
   
   .card {
+    display: flex;
     width: 500px;
     margin: 0 auto;
     padding: 20px;
@@ -31,4 +32,10 @@
   .card form .MuiButton-root {
     margin-top: 20px;
   }
-  
+  .message {
+    margin-top: 10px;
+    text-align: center;
+  }
+  .link {
+    color: blue;
+  }

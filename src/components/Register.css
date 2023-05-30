@@ -31,4 +31,10 @@
   .card form .MuiButton-root {
     margin-top: 20px;
   }
-  
+  .message {
+    margin-top: 10px;
+    text-align: center;
+  }
+  .linkto {
+    color: blue;
+  }
