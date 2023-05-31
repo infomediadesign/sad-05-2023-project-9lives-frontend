@@ -1,25 +1,30 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
+import Register from './components/Register';
 import './App.css';
+// import { Switch } from '@mui/material';
 
-function App() {
+const App = () => {
+  // const [isRegistered, setIsRegistered] = useState(false);
+
+  // const handleRegister = () => {
+  //   setIsRegistered(true);
+  // };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {/* {isRegistered ? (
+        <Login />
+      ) : (
+        <Register onRegister={handleRegister} />
+      )} */}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
