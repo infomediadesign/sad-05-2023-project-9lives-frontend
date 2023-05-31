@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-
+import { Link } from 'react-router-dom';
 import "./PostLogin.css";
 
 const PostLogin = () => {
@@ -21,7 +21,9 @@ const PostLogin = () => {
               type="submit"
               variant="contained"
             >
-              Join
+              <Link to="/join" className="linkto">
+            Join
+            </Link>
             </Button>
             <Button type="submit" variant="contained">
               Create
