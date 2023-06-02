@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+// import Button from './Button';
+import Button from "@mui/material/Button";
 import './Register.css';
 
 const Register = ({ onRegister }) => {
@@ -14,7 +15,7 @@ const Register = ({ onRegister }) => {
     e.preventDefault();
     console.log('Registering...', email, password);
   
-    onRegister();
+   
   };
 
   return (

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import './Login.css';
 
 const Login = () => {
@@ -35,9 +35,13 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
           <Button type="submit" variant="contained" fullWidth>
+            <Link to="/home" className="linkto">
             Login
+            </Link>
           </Button>
+          
           <p className='message'>
             Create a new account{' '}
             <Link to='/register' className='link'>
