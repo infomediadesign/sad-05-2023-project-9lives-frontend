@@ -1,3 +1,6 @@
 [submodule "sad-05-2023-project-9lives-backend"]
 	path = sad-05-2023-project-9lives-backend
 	url = https://github.com/infomediadesign/sad-05-2023-project-9lives-backend.git
+[submodule "sad-05-2023-project-9lives-registration-MS"]
+	path = sad-05-2023-project-9lives-registration-MS
+	url = https://github.com/infomediadesign/sad-05-2023-project-9lives-registration-MS.git
