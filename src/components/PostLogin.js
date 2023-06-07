@@ -21,12 +21,14 @@ const PostLogin = () => {
               type="submit"
               variant="contained"
             >
-              <Link to="/join" className="linkto">
+              <Link to="/join" className="link">
             Join
             </Link>
             </Button>
             <Button type="submit" variant="contained">
+              <Link to="/create" className="linkto">
               Create
+              </Link>
             </Button>
           </div>
 

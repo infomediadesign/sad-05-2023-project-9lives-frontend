@@ -5,6 +5,9 @@ import Register from "./components/Register";
 import "./App.css";
 import PostLogin from "./components/PostLogin";
 import Join from "./components/Join";
+import Create from "./components/Create";
+import Display from "./components/Display";
+// import ScratchProject from "./components/ScratchProject"; 
 // import { Switch } from '@mui/material';
 
 const App = () => {
@@ -22,10 +25,13 @@ const App = () => {
         <Register onRegister={handleRegister} />
       )} */}
       <Routes>
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<PostLogin />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/display" element={<Display />} />
      
       </Routes>
     </div>
