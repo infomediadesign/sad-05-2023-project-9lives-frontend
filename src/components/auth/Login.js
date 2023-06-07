@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import TextField from '@mui/material/TextField';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import './Login.css';
+import "./Login.css";
+import axios from "axios";
+import { __LOGIN_URL__ } from "../../utils/constants";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedInUser, setLoggedInUser] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log('Logging in...', email, password);
-
+    axios
+      .post(__LOGIN_URL__, {
+        email,
+        password,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setLoggedInUser(res.data);
+          navigate("/home");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -37,14 +51,14 @@ const Login = () => {
           </div>
 
           <Button type="submit" variant="contained" fullWidth>
-            <Link to="/home" className="linkto">
+            {/* <Link to="/home" className="linkto"> */}
             Login
-            </Link>
+            {/* </Link> */}
           </Button>
-          
-          <p className='message'>
-            Create a new account{' '}
-            <Link to='/register' className='link'>
+
+          <p className="message">
+            Create a new account{" "}
+            <Link to="/register" className="link">
               Register
             </Link>
           </p>
