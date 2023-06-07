@@ -5,8 +5,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 // import RefreshIcon from "@mui/icons-material/Refresh";
 import Display from "./Display";
+import { useNavigate } from "react-router-dom";
+
 
 const Create = () => {
+  const navigate = useNavigate();
   const [numPlayers, setNumPlayers] = useState("");
   const [numRounds, setNumRounds] = useState("");
   const [numWordChoices, setNumWordChoices] = useState("");
@@ -26,7 +29,10 @@ const Create = () => {
 
     setIsSubmitted(true);
   };
-
+  
+  const handleBack = () => {
+    navigate("/home"); 
+  };
   const handlePlayerNameChange = (index, newName) => {
     setPlayerNames((prevNames) => {
       const updatedNames = [...prevNames];
@@ -90,6 +96,15 @@ const Create = () => {
               onClick={handleSubmit}
             >
               Create your room
+            </Button>
+            
+            <Button sx={{ marginTop: "40px" }}
+              type="submit"
+              variant="contained"
+              fullWidth
+              onClick={handleBack}>
+                
+              Back
             </Button>
           </>
         </CardContent>
