@@ -24,6 +24,7 @@ const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           setLoggedInUser(res.data);
+          localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
           navigate("/home");
         }
       })
