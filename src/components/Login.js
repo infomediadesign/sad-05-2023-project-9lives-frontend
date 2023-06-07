@@ -12,9 +12,22 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showError, setShowError] = useState(false);
+
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    if (!email && !password) {
+      setShowError(true);
+      return;
+    }
+
+    if (!password) {
+      setShowError(true);
+      return;
+    }
+    
     console.log('Logging in...', email, password);
     navigate('/home');
   };
@@ -43,6 +56,10 @@ const Login = () => {
             Login
           </Button>
           
+          {showError && (
+            <p className="error-message">Please enter the required information to login.</p>
+          )}
+
           <p className='message'>
             Create a new account{' '}
             <Link to='/register' className='link'>
