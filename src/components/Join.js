@@ -4,8 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 const Join = () => {
   const handleSubmit = (event) => {
@@ -14,7 +13,6 @@ const Join = () => {
 
   return (
     <div>
-      
       <Card className="card">
         <CardContent>
           <h2> Please Enter the Room Id</h2>
@@ -26,18 +24,43 @@ const Join = () => {
               fullWidth
               inputProps={{ inputMode: "numeric" }}
             />
-            <Button type="submit" variant="contained">
+            {/* <Button type="submit" variant="contained">
             <Link to="/home" className="linkto">
             Back
             </Link>
             </Button>
             <Button type="submit" variant="contained">
               Join
-            </Button>
+            </Button> */}
+            <div className="buttonsDiv">
+              <Button
+                className="button1"
+                style={{ marginBottom: "1rem" }}
+                type="submit"
+                variant="contained"
+              >
+                <Link to="/playground" className="linkto">
+                  Join
+                </Link>
+              </Button>
+              {/* <Button type="submit" variant="contained">
+              Back
+            </Button> */}
+              <Button
+                className="button1"
+                style={{ marginBottom: "1rem" }}
+                type="submit"
+                variant="contained"
+              >
+
+              <Link to="/home" className="linkto">
+                Back
+              </Link>
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>
-     
     </div>
   );
 };
