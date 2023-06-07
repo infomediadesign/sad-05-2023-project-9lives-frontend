@@ -1,5 +1,8 @@
+
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
@@ -7,13 +10,14 @@ import Button from "@mui/material/Button";
 import './Login.css';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log('Logging in...', email, password);
-
+    navigate('/home'); // Replace '/home' with the desired URL of the next page
   };
 
   return (
@@ -37,9 +41,7 @@ const Login = () => {
           </div>
 
           <Button type="submit" variant="contained" fullWidth>
-            <Link to="/home" className="linkto">
             Login
-            </Link>
           </Button>
           
           <p className='message'>
