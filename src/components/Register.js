@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
-// import Button from './Button';
 import Button from "@mui/material/Button";
 import './Register.css';
 
-const Register = ({ onRegister }) => {
+const Register = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showError, setShowError] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      setShowError(true);
+      return;
+    }
+
     console.log('Registering...', email, password);
-  
-   
+
+    setShowError(false); 
+
+    setShowMessage(true);
+    setTimeout(() => {
+      setShowMessage(false);
+      navigate('/home');
+    }, 2000);
   };
 
   return (
@@ -40,6 +54,15 @@ const Register = ({ onRegister }) => {
           <Button type="submit" variant="contained" fullWidth>
             Register
           </Button>
+
+          {showError && (
+            <p className="error-message">Please enter the required information to register.</p>
+          )}
+
+          {showMessage && (
+            <p className="success-message">User Registered</p>
+          )}
+
           <p className='message'>
             Already have an account? {' '}
             <Link to="/login" className="linkto">

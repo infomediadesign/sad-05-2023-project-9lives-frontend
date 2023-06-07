@@ -38,3 +38,18 @@
   .linkto {
     color: blue;
   }
+
+  .error-message {
+    color: #ff0000;
+    font-size: 16px;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .success-message {
+    color: #155724;
+    font-size: 16px;
+    margin-top: 8px;
+    text-align: center;
+  }
+  
