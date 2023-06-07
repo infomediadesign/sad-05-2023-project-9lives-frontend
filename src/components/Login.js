@@ -1,8 +1,7 @@
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
@@ -17,7 +16,7 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log('Logging in...', email, password);
-    navigate('/home'); // Replace '/home' with the desired URL of the next page
+    navigate('/home');
   };
 
   return (
