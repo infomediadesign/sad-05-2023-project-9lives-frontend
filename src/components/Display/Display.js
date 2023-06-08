@@ -24,11 +24,6 @@ const Display = ({
       <Typography variant="h6" component="h3" gutterBottom>
         Player Names:
       </Typography>
-      <ul>
-        {playerNames.map((name, index) => (
-          <li key={index}>{name}</li>
-        ))}
-      </ul>
       <Typography variant="h6" component="h3" gutterBottom>
         Number of Rounds: {numRounds}
       </Typography>

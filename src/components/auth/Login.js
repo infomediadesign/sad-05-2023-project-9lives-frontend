@@ -34,7 +34,7 @@ const Login = () => {
   return (
     <Card className="card">
       <CardContent>
-        <h2>Login/Sign-in</h2>
+        <h2>Login</h2>
         <form onSubmit={handleLogin}>
           <div className="input-group">
             <TextField

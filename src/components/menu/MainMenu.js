@@ -7,6 +7,10 @@ import "./MainMenu.css";
 
 const MainMenu = () => {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    console.log("logout ho gaya bc tu");
+  };
   return (
     <div>
       <div className="flex">
