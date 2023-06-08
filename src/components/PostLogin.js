@@ -26,6 +26,7 @@ const PostLogin = () => {
               onClick={() => navigate("/create")}
             >
               Create
+              </Link>
             </Button>
           </div>
 

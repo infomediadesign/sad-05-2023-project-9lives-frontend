@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import HandleRoutes from "./components/HandleRoutes";
 import "./App.css";
+import Create from "./components/Create";
+import Display from "./components/Display";
+
 
 const App = () => {
-  // const [isRegistered, setIsRegistered] = useState(false);
-
-  // const handleRegister = () => {
-  //   setIsRegistered(true);
-  // };
-
   return (
     <div className="container">
-      {/* {isRegistered ? (
-        <Login />
-      ) : (
-        <Register onRegister={handleRegister} />
-      )} */}
+      <Routes>
+        <Route path="/create" element={<Create />} />
+        <Route path="/display" element={<Display />} />
+      </Routes>
       <HandleRoutes />
     </div>
   );
