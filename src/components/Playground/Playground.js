@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Figure from './Figure';
 import Wrongletters from '../Wrongletters/Wrongletters';
 import Word from '../Word/Word';
 import Notification from '../Notification/Notification';
 import Popup from '../Popup/Popup';
+import Hearts from './Heart';
 
 const words = ['faana', 'ramleela', 'vikramvedha', 'singam', 'raazi'];
 let selectedWord = words[Math.floor(Math.random() * words.length)];
@@ -15,6 +15,7 @@ function Playground() {
   const [showNotification, setShowNotification] = useState(false);
   const [time, setTime] = useState(60);
   const [arrowPosition, setArrowPosition] = useState(0);
+  const [lives, setLives] = useState(9);
 
   useEffect(() => {
     const handleKeydown = (event) => {
@@ -31,6 +32,7 @@ function Playground() {
         } else {
           if (!wrongLetters.includes(letter)) {
             setWrongLetters((wrongLetters) => [...wrongLetters, letter]);
+            setLives((prevLives) => prevLives - 1);
           } else {
             setShowNotification(true);
           }
@@ -56,6 +58,7 @@ function Playground() {
     setPlayable(true);
     setCorrectLetters([]);
     setWrongLetters([]);
+    setLives(9);
 
     const random = Math.floor(Math.random() * words.length);
     selectedWord = words[random];
@@ -64,9 +67,9 @@ function Playground() {
   return (
     <>
       <div className="game-container">
-        <Figure wrongLetters={wrongLetters} />
         <Wrongletters wrongLetters={wrongLetters} />
         <Word selectedWord={selectedWord} correctLetters={correctLetters} />
+        <Hearts lives={lives} />
         <div className="slider-container">
           <div className="slider-arrow" style={{ left: `${arrowPosition}%` }} />
           <input
