@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Card, CardContent } from "@mui/material";
 // import RefreshIcon from "@mui/icons-material/Refresh";
 import { useNavigate } from "react-router-dom";
-import Display from "../Display/Display";
+import Display from "../../Display/Display";
 
 const Create = () => {
   const navigate = useNavigate();
