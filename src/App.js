@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
 import "./App.css";
-import PostLogin from "./components/PostLogin";
-import Join from "./components/Join";
-import Create from "./components/Create";
-import Display from "./components/Display";
+import PostLogin from "./components/PostLogin/PostLogin";
+import Join from "./components/Join/Join";
+import Create from "./components/Create/Create";
+import Display from "./components/Display/Display";
 // import ScratchProject from "./components/ScratchProject"; 
 // import { Switch } from '@mui/material';
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 // import Figure from "./components/Figure";
-import Playground from "./components/Playground";
+import Playground from "./components/Playground/Playground";
 // import Wrongletters from "./components/Wrongletters";
 // import Word from "./components/Word";
 
