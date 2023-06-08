@@ -3,6 +3,7 @@ import Figure from './Figure';
 import Wrongletters from './Wrongletters';
 import Word from './Word';
 import Notification from './Notification';
+import Popup from './Popup';
 
 const words = ['faana', 'ramleela', 'vikramvedha', 'singam', 'raazi'];
 let selectedWord = words[Math.floor(Math.random() * words.length)];
@@ -40,6 +41,16 @@ function Playground() {
     return () => window.removeEventListener('keydown', handleKeydown);
   }, [correctLetters, wrongLetters, playable]);
 
+function playAgain() {
+    setPlayable(true);
+
+    setCorrectLetters([]);
+    setWrongLetters([]);
+
+    const random = Math.floor(Math.random() * words.length);
+    selectedWord = words[random];
+}
+
   return (
     <>
       <div className="game-container">
@@ -47,6 +58,8 @@ function Playground() {
         <Wrongletters wrongLetters={wrongLetters} />
         <Word selectedWord={selectedWord} correctLetters={correctLetters} />
       </div>
+      <Popup correctLetters={correctLetters} wrongLetters={wrongLetters} 
+      selectedWord={selectedWord} setPlayable={setPlayable} playAgain={playAgain}/>
       <Notification showNotification={showNotification} setShowNotification={setShowNotification} />
     </>
   );
