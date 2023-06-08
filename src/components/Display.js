@@ -6,7 +6,13 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import "./Display.css";
 
-const Display = ({ numPlayers, playerNames, numRounds, numWordChoices, selectedRound }) => {
+const Display = ({
+  numPlayers,
+  playerNames,
+  numRounds,
+  numWordChoices,
+  selectedRound,
+}) => {
   return (
     <div className="display-container">
       <Typography variant="h4" component="h2" gutterBottom>
@@ -37,4 +43,3 @@ const Display = ({ numPlayers, playerNames, numRounds, numWordChoices, selectedR
 };
 
 export default Display;
-
