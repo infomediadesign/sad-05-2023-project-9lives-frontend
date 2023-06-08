@@ -1,6 +1,4 @@
-
-
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -9,9 +7,18 @@ import TextField from "@mui/material/TextField";
 
 const Join = () => {
   const navigate = useNavigate();
+  const [roomid, setRoomId] = useState('');
+
+  const [showError, setShowError] = useState(false);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!roomid|| !/^[a-zA-Z0-9]+$/.test(roomid)) {
+      setShowError(true);
+      return;
+    }
     navigate("/playground"); 
   };
 
@@ -31,6 +38,8 @@ const Join = () => {
               variant="outlined"
               fullWidth
               inputProps={{ inputMode: "numeric" }}
+              value={roomid}
+              onChange={(e) => setRoomId(e.target.value)}
             />
             <Button type="button" variant="contained" onClick={handleBack}>
               Back
@@ -38,6 +47,11 @@ const Join = () => {
             <Button type="submit" variant="contained">
               Join
             </Button>
+
+            {showError && (
+            <p className="error-message">Please enter the correct Room Id to play</p>
+          )}
+
           </form>
         </CardContent>
       </Card>
