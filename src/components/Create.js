@@ -16,9 +16,17 @@ const Create = () => {
   const [playerNames, setPlayerNames] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedRound, setSelectedRound] = useState(null);
+  const [showError, setShowError] = useState(false);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!numPlayers || !numRounds || !numWordChoices) {
+      setShowError(true);
+      return;
+    }
+
     console.log(
       "Form submitted:",
       numPlayers,
@@ -106,6 +114,10 @@ const Create = () => {
                 
               Back
             </Button>
+
+            {showError && (
+            <p className="error-message">Please fill all the data to Create a Room</p>
+          )}
           </>
         </CardContent>
       </Card>
