@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Wrongletters from '../Wrongletters/Wrongletters';
-import Word from '../Word/Word';
-import Notification from '../Notification/Notification';
-import Popup from '../Popup/Popup';
+import Wrongletters from '../../Word/Wrongletters/Wrongletters';
+import Word from '../../Word/Word';
+import Notification from '../../../helpers/Notification/Notification';
+import Popup from '../../../helpers/Popup/Popup';
 import Hearts from './Heart';
 
 const words = ['faana', 'ramleela', 'vikramvedha', 'singam', 'raazi'];

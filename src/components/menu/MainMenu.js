@@ -3,10 +3,14 @@ import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import "./PostLogin.css";
+import "./MainMenu.css";
 
-const PostLogin = () => {
+const MainMenu = () => {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    console.log("logout ho gaya bc tu");
+  };
   return (
     <div>
       <div className="flex">
@@ -57,4 +61,4 @@ const PostLogin = () => {
   );
 };
 
-export default PostLogin;
+export default MainMenu;
