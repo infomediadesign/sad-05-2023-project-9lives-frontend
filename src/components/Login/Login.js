@@ -11,7 +11,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -24,12 +23,8 @@ const Login = () => {
     console.log("Logging in...", email, password);
 
     setShowError(false);
+    navigate("/home");
 
-    setShowMessage(true);
-    setTimeout(() => {
-      setShowMessage(false);
-      navigate("/home");
-    }, 2000);
   };
 
   return (
@@ -62,9 +57,7 @@ const Login = () => {
             </p>
           )}
 
-          {showMessage && (
-            <p className="success-message">Logged in successfully.</p>
-          )}
+       
 
           <p className="message">
             Create a new account{" "}
