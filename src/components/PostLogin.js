@@ -21,7 +21,6 @@ const PostLogin = () => {
               Join
             </Button>
             <Button
-              type="submit"
               variant="contained"
               onClick={() => navigate("/create")}
             >
