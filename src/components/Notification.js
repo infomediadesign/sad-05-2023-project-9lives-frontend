@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 
-const Notification = () => {
+const Notification = ({ showNotification, setShowNotification }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowNotification(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [showNotification, setShowNotification]);
+
   return (
-    <div class="notification-container" id="notification-container">
-    <p>You have already entered this letter</p>
-  </div>
-  )
-}
+    <div className={`notification-container ${showNotification ? 'show' : ''}`}>
+      <p>You have already entered this letter</p>
+    </div>
+  );
+};
 
-export default Notification
+export default Notification;
