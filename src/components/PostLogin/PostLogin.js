@@ -1,8 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { useNavigate } from "react-router-dom";
 import "./PostLogin.css";
 
 const PostLogin = () => {
@@ -21,17 +21,25 @@ const PostLogin = () => {
               Join
             </Button>
             <Button
+              style={{ marginBottom: "1rem" }}
               variant="contained"
               onClick={() => navigate("/create")}
             >
               Create
+            </Button>
+            <Button
+              className="logout"
+              variant="contained"
+              onClick={handleLogout}
+              style={{ backgroundColor: "rgb(218, 73, 73)" }}
+            >
+              Logout
             </Button>
           </div>
 
           <Card className="card">
             <CardContent>
               <h2>How to Play</h2>
-
               <h3>
                 Have the other player guess one letter at a time - or he or she
                 can use a turn to guess the entire word or words. Fill in the
