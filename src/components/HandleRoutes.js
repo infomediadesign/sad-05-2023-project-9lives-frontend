@@ -17,7 +17,7 @@ const HandleRoutes = () => {
       <Route path="/home" element={<MainMenu />} />
       <Route path="/join" element={<Join />} />
       <Route path="/room/create" element={<Create />} />
-      <Route path="/room/create/lobby" element={<Lobby />} />
+      <Route path="/lobby" element={<Lobby />} />
       <Route path="/playground" element={<Playground />} />
     </Routes>
   );

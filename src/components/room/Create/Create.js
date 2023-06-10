@@ -1,28 +1,33 @@
 import React, { useState } from "react";
 import Lobby from "./Lobby";
 import { TextField, Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 
 const Create = () => {
   const navigate = useNavigate();
   const [numPlayers, setNumPlayers] = useState("");
   const [numRounds, setNumRounds] = useState("");
-  const [numWordChoices, setNumWordChoices] = useState("");
+  // const [numWordChoices, setNumWordChoices] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [isCreator, setIsCreator] = useState(true);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!numPlayers || !numRounds || !numWordChoices) {
+    if (!numPlayers || !numRounds) {
+      // || !numWordChoices also this.
       setShowError(true);
       return;
     }
 
-    console.log("Form submitted:", numPlayers, numRounds, numWordChoices);
+    console.log("Form submitted:", numPlayers, numRounds);
+    // if wants to add this  , numWordChoices
+    navigate("/lobby", { state: { numRounds: numRounds, numPlayers: numPlayers } })
 
-    setIsSubmitted(true);
+    // setIsSubmitted(true);
   };
 
   const handleBack = () => {
@@ -37,16 +42,17 @@ const Create = () => {
     setNumRounds(event.target.value);
   };
 
-  const handleNumWordChoicesChange = (event) => {
-    setNumWordChoices(event.target.value);
-  };
+  // const handleNumWordChoicesChange = (event) => {
+  //   setNumWordChoices(event.target.value);
+  // };
 
   if (isSubmitted) {
     return (
       <Lobby
+        // to="/lobby"
         numPlayers={numPlayers}
         numRounds={numRounds}
-        numWordChoices={numWordChoices}
+      // numWordChoices={numWordChoices}
       />
     );
   } else {
@@ -84,7 +90,7 @@ const Create = () => {
                   <MenuItem value={3}>3</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl fullWidth>
+              {/* <FormControl fullWidth>
                 <InputLabel id="num-words-label">Number of Word Choices</InputLabel>
                 <Select
                   labelId="num-words-label"
@@ -97,7 +103,7 @@ const Create = () => {
                   <MenuItem value={4}>4</MenuItem>
                   <MenuItem value={5}>5</MenuItem>
                 </Select>
-              </FormControl>
+              </FormControl> */}
             </div>
             <Button
               sx={{ marginTop: "40px" }}
