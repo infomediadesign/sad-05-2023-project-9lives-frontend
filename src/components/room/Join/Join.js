@@ -15,7 +15,7 @@ const Join = () => {
       setShowError(true);
       return;
     }
-    navigate("/playground");
+    navigate("/lobby/");
   };
 
   const handleBack = () => {

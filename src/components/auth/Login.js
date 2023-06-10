@@ -8,23 +8,21 @@ import "./Login.css";
 import axios from "axios";
 import { __LOGIN_URL__ } from "../../utils/constants";
 import { useJwt } from "react-jwt";
+import { useGlobalContext } from "../../utils/Hooks/context";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  
-  let auth = {
-    token: JSON.parse(localStorage.getItem("loggedInUser")).accessToken,
-  };
+  const { auth, setAuth, setInLocalStorage } = useGlobalContext();
+
   const { decodedToken, isExpired } = useJwt(auth.token);
-  console.log('Login: ', isExpired)
-  // useEffect(() => {
-  //   debugger;
-  //   if (auth.token && !isExpired) {
-  //     navigate("/home");
-  //   }
-  // }, []);
+  // console.log("Login: ", isExpired);
+  useEffect(() => {
+    if (auth.token && !isExpired) {
+      navigate("/home");
+    }
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -35,7 +33,8 @@ const Login = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          localStorage.setItem("loggedInUser", JSON.stringify(res.data));
+          setInLocalStorage(res.data);
+          setAuth({ token: res.data.accessToken });
           navigate("/home");
         }
       })

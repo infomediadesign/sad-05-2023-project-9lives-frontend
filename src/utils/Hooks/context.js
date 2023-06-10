@@ -1,0 +1,33 @@
+import React, { useContext, useState } from "react";
+
+const AppContext = React.createContext();
+
+const setInLocalStorage = (data) => {
+  localStorage.setItem("loggedInUser", JSON.stringify(data));
+};
+
+const removeFromLocalStorage = () => {
+  localStorage.removeItem("loggedInUser");
+};
+
+const AppProvider = (props) => {
+  const [auth, setAuth] = useState({
+    token: JSON.parse(localStorage.getItem("loggedInUser"))?.accessToken ?? "",
+  });
+  // let auth = {
+  //   token: JSON.parse(localStorage.getItem("loggedInUser")).accessToken,
+  // };
+  return (
+    <AppContext.Provider
+      value={{ auth, setAuth, setInLocalStorage, removeFromLocalStorage }}
+    >
+      {props.children}
+    </AppContext.Provider>
+  );
+};
+
+export const useGlobalContext = () => {
+  return useContext(AppContext);
+};
+
+export { AppContext, AppProvider };
