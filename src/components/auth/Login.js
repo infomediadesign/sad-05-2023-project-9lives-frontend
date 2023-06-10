@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -7,12 +7,24 @@ import Button from "@mui/material/Button";
 import "./Login.css";
 import axios from "axios";
 import { __LOGIN_URL__ } from "../../utils/constants";
+import { useJwt } from "react-jwt";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUser, setLoggedInUser] = useState("");
   const navigate = useNavigate();
+  
+  let auth = {
+    token: JSON.parse(localStorage.getItem("loggedInUser")).accessToken,
+  };
+  const { decodedToken, isExpired } = useJwt(auth.token);
+  console.log('Login: ', isExpired)
+  // useEffect(() => {
+  //   debugger;
+  //   if (auth.token && !isExpired) {
+  //     navigate("/home");
+  //   }
+  // }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -23,8 +35,7 @@ const Login = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          setLoggedInUser(res.data);
-          localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+          localStorage.setItem("loggedInUser", JSON.stringify(res.data));
           navigate("/home");
         }
       })
