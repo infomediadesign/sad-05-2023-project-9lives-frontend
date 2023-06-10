@@ -1,7 +1,7 @@
-FROM node:gallium-buster
+FROM node:18.16-buster
 
 WORKDIR /sad-05-2023-project-9lives-frontend/
-COPY .json .
+COPY package*.json .
 RUN npm config set legacy-peer-deps true
 RUN npm install
 COPY . .
