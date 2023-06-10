@@ -13,6 +13,8 @@ const removeFromLocalStorage = () => {
 const AppProvider = (props) => {
   const [auth, setAuth] = useState({
     token: JSON.parse(localStorage.getItem("loggedInUser"))?.accessToken ?? "",
+    id: JSON.parse(localStorage.getItem("loggedInUser"))?._id ?? "",
+    email: JSON.parse(localStorage.getItem("loggedInUser"))?.email ?? "",
   });
   // let auth = {
   //   token: JSON.parse(localStorage.getItem("loggedInUser")).accessToken,

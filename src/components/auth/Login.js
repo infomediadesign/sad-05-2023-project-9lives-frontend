@@ -34,7 +34,11 @@ const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           setInLocalStorage(res.data);
-          setAuth({ token: res.data.accessToken });
+          setAuth({
+            token: res.data.accessToken,
+            email: res.data.email,
+            id: res.data._id,
+          });
           navigate("/home");
         }
       })
