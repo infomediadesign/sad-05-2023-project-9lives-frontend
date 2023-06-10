@@ -15,7 +15,7 @@ const HandleRoutes = () => {
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-
+        
       <Route element={<ProtectedRoute />}>
         <Route path="/home" element={<MainMenu />} />
         <Route path="/join" element={<Join />} />
