@@ -11,6 +11,7 @@ const MainMenu = () => {
   const handleLogout = () => {
     console.log("logout ho gaya bc tu");
   };
+
   return (
     <div>
       <div className="flex">
@@ -27,7 +28,7 @@ const MainMenu = () => {
             <Button
               style={{ marginBottom: "1rem" }}
               variant="contained"
-              onClick={() => navigate("/create")}
+              onClick={() => navigate("/room/create")}
             >
               Create
             </Button>
