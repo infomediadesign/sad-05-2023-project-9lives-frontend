@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -7,12 +7,22 @@ import Button from "@mui/material/Button";
 import "./Login.css";
 import axios from "axios";
 import { __LOGIN_URL__ } from "../../utils/constants";
+import { useJwt } from "react-jwt";
+import { useGlobalContext } from "../../utils/Hooks/context";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUser, setLoggedInUser] = useState("");
   const navigate = useNavigate();
+  const { auth, setAuth, setInLocalStorage } = useGlobalContext();
+
+  const { decodedToken, isExpired } = useJwt(auth.token);
+  // console.log("Login: ", isExpired);
+  useEffect(() => {
+    if (auth.token && !isExpired) {
+      navigate("/home");
+    }
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -23,8 +33,12 @@ const Login = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          setLoggedInUser(res.data);
-          localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+          setInLocalStorage(res.data);
+          setAuth({
+            token: res.data.accessToken,
+            email: res.data.email,
+            id: res.data._id,
+          });
           navigate("/home");
         }
       })
@@ -34,7 +48,7 @@ const Login = () => {
   return (
     <Card className="card">
       <CardContent>
-        <h2>Login/Sign-in</h2>
+        <h2>Login</h2>
         <form onSubmit={handleLogin}>
           <div className="input-group">
             <TextField

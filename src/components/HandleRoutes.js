@@ -1,22 +1,30 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-//================= Component imports ====================//
 import Login from "./auth/Login";
 import Register from "./auth/Register";
-import PostLogin from "./PostLogin";
-import Join from "./Join";
-import Create from "./Create";
-import Display from "./Display";
+import MainMenu from "./menu/MainMenu";
+import Join from "./room/Join/Join";
+import Create from "./room/Create/Create";
+import Playground from "./room/Playground/Playground";
+import Lobby from "./room/Create/Lobby";
+import ProtectedRoute from "../utils/ProtectedRoute";
 
 const HandleRoutes = () => {
   return (
     <Routes>
+      <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/home" element={<PostLogin />} />
-      <Route path="/join" element={<Join />} />
-      <Route path="/create" element={<Create />} />
-      <Route path="/display" element={<Display />} />
+        
+      <Route element={<ProtectedRoute />}>
+        <Route path="/home" element={<MainMenu />} />
+        <Route path="/join" element={<Join />} />
+        <Route path="/room/create" element={<Create />} />
+        <Route path="/lobby/:roomID" element={<Lobby />} />
+        <Route path="/playground/:roomID" element={<Playground />} />
+      </Route>
+
+      <Route path="*" element={<p>There's nothing here: 404!</p>} />
     </Routes>
   );
 };
