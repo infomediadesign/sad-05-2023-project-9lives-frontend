@@ -18,7 +18,7 @@ const Join = () => {
       .patch(
         __JOIN_URL__,
         {
-          email: "raj@gmail.com",
+          email: "raj@gmail.com", // change later
           gameID: roomid,
           userID: "648183422bade7e683c0fe04",
         },
