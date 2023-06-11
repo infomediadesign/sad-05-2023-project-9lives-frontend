@@ -5,7 +5,7 @@ import { Button, Card, CardContent, TextField } from "@mui/material";
 const Join = () => {
   const navigate = useNavigate();
   const [roomid, setRoomId] = useState("");
-
+  const [name, setName] = useState("");
   const [showError, setShowError] = useState(false);
 
   const handleSubmit = (event) => {
@@ -28,6 +28,13 @@ const Join = () => {
         <CardContent>
           <h2> Please Enter the Room Id</h2>
           <form onSubmit={handleSubmit}>
+          <TextField
+              label="Enter Your Name"
+              variant="outlined"
+              fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
             <TextField
               type="alphanumeric"
               label="Room id"

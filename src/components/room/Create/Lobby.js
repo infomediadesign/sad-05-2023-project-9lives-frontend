@@ -27,12 +27,6 @@ const Lobby = ({
         <h2 className="lobby-heading">Game Settings</h2>
         <p className="lobby-info">Number of Rounds: {numRounds}</p>
         {/* <p className="lobby-info">Number of Word Choices: {numWordChoices}</p> */}
-
-        {/* <ul className="lobby-player-names">
-          {playerNames.map((name, index) => (
-            <li key={index}>{name}</li>
-          ))} 
-        </ul> */}
       </div>
       <div className="vertical-line"></div>
       <div className="form-section">
