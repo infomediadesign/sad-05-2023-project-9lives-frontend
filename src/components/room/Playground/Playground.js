@@ -18,8 +18,8 @@ function Playground() {
   const [arrowPosition, setArrowPosition] = useState(0);
   const [lives, setLives] = useState(9);
   const [showPopup, setShowPopup] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
-  
   useEffect(() => {
     const handleKeydown = (event) => {
       const { key, keyCode } = event;
@@ -49,13 +49,27 @@ function Playground() {
   }, [correctLetters, wrongLetters, playable]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime((prevTime) => prevTime - 1);
-      setArrowPosition((prevPosition) => prevPosition + 1);
-    }, 1000);
+    if (time === 30 && !showPopup) {
+      setShowPopup(true);
+    }
+
+    if (time === 0 || lives === 0 || correctLetters.length === selectedWord.length) {
+      setPlayable(false);
+      setGameOver(true);
+    }
+  }, [time, showPopup, lives, correctLetters, selectedWord.length]);
+
+  useEffect(() => {
+    let interval = null;
+    if (playable) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+        setArrowPosition((prevPosition) => prevPosition + 1);
+      }, 1000);
+    }
 
     return () => clearInterval(interval);
-  }, []);
+  }, [playable]);
 
   function playAgain() {
     setPlayable(true);
@@ -63,16 +77,11 @@ function Playground() {
     setWrongLetters([]);
     setLives(9);
     setTime(60);
+    setGameOver(false);
 
     const random = Math.floor(Math.random() * words.length);
     selectedWord = words[random];
   }
-
-  useEffect(() => {
-    if (time === 30 && !showPopup) {
-      setShowPopup(true);
-    }
-  }, [time, showPopup]);
 
   return (
     <>
@@ -107,9 +116,13 @@ function Playground() {
           <p>Clue</p>
         </div>
       )}
+      {gameOver && (
+        <div className="popup">
+          <p>Game Over</p>
+        </div>
+      )}
     </>
   );
 }
 
 export default Playground;
-
