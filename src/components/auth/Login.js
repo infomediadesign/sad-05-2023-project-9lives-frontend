@@ -16,7 +16,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { auth, setAuth, setInLocalStorage } = useGlobalContext();
 
-  const { decodedToken, isExpired } = useJwt(auth.token);
+  const { isExpired } = useJwt(auth.token);
   // console.log("Login: ", isExpired);
   useEffect(() => {
     if (auth.token && !isExpired) {

@@ -4,12 +4,17 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import "./MainMenu.css";
+import { useGlobalContext } from "../../utils/Hooks/context";
 
 const MainMenu = () => {
   const navigate = useNavigate();
+  const { setAuth, removeFromLocalStorage } = useGlobalContext();
 
   const handleLogout = () => {
-    console.log("logout ho gaya bc tu");
+    // console.log("logout ho gaya bc tu");
+    removeFromLocalStorage();
+    setAuth({ token: "" });
+    navigate("/login");
   };
 
   return (

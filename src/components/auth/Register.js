@@ -1,35 +1,38 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import TextField from '@mui/material/TextField';
-import Button from "@mui/material/Button";
-import './Register.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Card, CardContent, TextField, Button } from "@mui/material";
+import "./Register.css";
+import axios from "axios";
+import { __SIGNUP_URL__ } from "../../utils/constants";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
-
     if (!email || !password) {
       setShowError(true);
-      return;
+    } else {
+      setShowError(false);
+      axios
+        .post(__SIGNUP_URL__, {
+          email,
+          password: password,
+        })
+        .then((res) => {
+          console.log(res.data);
+          setShowMessage(true);
+          setTimeout(() => {
+            setShowMessage(false);
+            navigate("/login");
+          }, 2000);
+        })
+        .catch((error) => console.log(error.message));
     }
-
-    console.log('Registering...', email, password);
-
-    setShowError(false); 
-
-    setShowMessage(true);
-    setTimeout(() => {
-      setShowMessage(false);
-      navigate('/home');
-    }, 2000);
   };
 
   return (
@@ -56,15 +59,15 @@ const Register = () => {
           </Button>
 
           {showError && (
-            <p className="error-message">Please enter the required information to register.</p>
+            <p className="error-message">
+              Please enter the required information to register.
+            </p>
           )}
 
-          {showMessage && (
-            <p className="success-message">User Registered</p>
-          )}
+          {showMessage && <p className="success-message">User Registered</p>}
 
-          <p className='message'>
-            Already have an account? {' '}
+          <p className="message">
+            Already have an account?{" "}
             <Link to="/login" className="linkto">
               Sign in
             </Link>
