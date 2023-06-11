@@ -16,9 +16,7 @@ const AppProvider = (props) => {
     id: JSON.parse(localStorage.getItem("loggedInUser"))?._id ?? "",
     email: JSON.parse(localStorage.getItem("loggedInUser"))?.email ?? "",
   });
-  // let auth = {
-  //   token: JSON.parse(localStorage.getItem("loggedInUser")).accessToken,
-  // };
+  
   return (
     <AppContext.Provider
       value={{ auth, setAuth, setInLocalStorage, removeFromLocalStorage }}

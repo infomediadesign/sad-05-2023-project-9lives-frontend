@@ -8,9 +8,9 @@ const ProtectedRoute = () => {
   //   token: JSON.parse(localStorage.getItem("loggedInUser")).accessToken
   // };
   const { auth } = useGlobalContext();
-  const { decodedToken, isExpired } = useJwt(auth.token);
+  const { isExpired } = useJwt(auth.token);
 
-  // console.log("Home: ", isExpired);
+  console.log("Home: ", isExpired);
   return auth.token && !isExpired ? <Outlet /> : <Navigate to="/login" />;
 };
 
