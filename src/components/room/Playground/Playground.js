@@ -53,7 +53,7 @@ function Playground() {
       setShowPopup(true);
     }
 
-    if (time === 0 || lives === 0 || correctLetters.length === selectedWord.length) {
+    if (time === 0 ) {
       setPlayable(false);
       setGameOver(true);
     }
@@ -119,6 +119,8 @@ function Playground() {
       {gameOver && (
         <div className="popup">
           <p>Game Over</p>
+          <button onClick={playAgain}>Play Again</button>
+
         </div>
       )}
     </>
