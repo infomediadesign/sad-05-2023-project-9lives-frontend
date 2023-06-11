@@ -10,7 +10,6 @@ const ProtectedRoute = () => {
   const { auth } = useGlobalContext();
   const { isExpired } = useJwt(auth.token);
 
-  console.log("Home: ", isExpired);
   return auth.token && !isExpired ? <Outlet /> : <Navigate to="/login" />;
 };
 
