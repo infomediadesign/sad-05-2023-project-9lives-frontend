@@ -4,8 +4,9 @@ import Word from '../../Word/Word';
 import Notification from '../../../helpers/Notification/Notification';
 import Popup from '../../../helpers/Popup/Popup';
 import Hearts from './Heart';
+import './Heart.css';
 
-const words = ['faana', 'ramleela', 'vikramvedha', 'singam', 'raazi'];
+const words = ['fanna', 'ramleela', 'vikramvedha', 'singam', 'raazi']; // to be fetched from db
 let selectedWord = words[Math.floor(Math.random() * words.length)];
 
 function Playground() {
@@ -16,7 +17,9 @@ function Playground() {
   const [time, setTime] = useState(60);
   const [arrowPosition, setArrowPosition] = useState(0);
   const [lives, setLives] = useState(9);
+  const [showPopup, setShowPopup] = useState(false);
 
+  
   useEffect(() => {
     const handleKeydown = (event) => {
       const { key, keyCode } = event;
@@ -59,28 +62,32 @@ function Playground() {
     setCorrectLetters([]);
     setWrongLetters([]);
     setLives(9);
+    setTime(60);
 
     const random = Math.floor(Math.random() * words.length);
     selectedWord = words[random];
   }
 
+  useEffect(() => {
+    if (time === 30 && !showPopup) {
+      setShowPopup(true);
+    }
+  }, [time, showPopup]);
+
   return (
     <>
       <div className="game-container">
+        <div className="hearts-slider-container">
+          <div className="hearts-container">
+            <Hearts lives={lives} />
+          </div>
+          <div className="slider-container">
+            <div className="slider-arrow" style={{ left: `${arrowPosition}%` }} />
+            <input type="range" min="0" max="60" value={time} className="slider" readOnly />
+          </div>
+        </div>
         <Wrongletters wrongLetters={wrongLetters} />
         <Word selectedWord={selectedWord} correctLetters={correctLetters} />
-        <Hearts lives={lives} />
-        <div className="slider-container">
-          <div className="slider-arrow" style={{ left: `${arrowPosition}%` }} />
-          <input
-            type="range"
-            min="0"
-            max="60"
-            value={time}
-            className="slider"
-            readOnly
-          />
-        </div>
       </div>
       <Popup
         correctLetters={correctLetters}
@@ -89,12 +96,20 @@ function Playground() {
         setPlayable={setPlayable}
         playAgain={playAgain}
       />
-      <Notification
-        showNotification={showNotification}
-        setShowNotification={setShowNotification}
-      />
+      {showNotification && (
+        <Notification
+          showNotification={showNotification}
+          setShowNotification={setShowNotification}
+        />
+      )}
+      {showPopup && (
+        <div className="popup">
+          <p>Clue</p>
+        </div>
+      )}
     </>
   );
 }
 
 export default Playground;
+
