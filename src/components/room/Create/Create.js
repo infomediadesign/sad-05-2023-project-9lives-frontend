@@ -13,26 +13,23 @@ import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const navigate = useNavigate();
-  const [numPlayers, setNumPlayers] = useState("");
-  const [numRounds, setNumRounds] = useState("");
+  const [numPlayers, setNumPlayers] = useState(2);
+  const [numRounds, setNumRounds] = useState(1);
   // const [numWordChoices, setNumWordChoices] = useState("");
   const [showError, setShowError] = useState(false);
-
+  const [creatorName, setCreatorName] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!numPlayers || !numRounds) {
+    if (!numPlayers || !numRounds || !creatorName) {
       // || !numWordChoices also this.
       setShowError(true);
       return;
     }
 
-    console.log("Form submitted:", numPlayers, numRounds);
+    console.log("Form submitted:", numPlayers, numRounds, creatorName);
     // if wants to add this  , numWordChoices
-    navigate("/lobby", {
-      state: { numRounds: numRounds, numPlayers: numPlayers },
-    });
-
+    navigate("/lobby", { state: { numRounds: numRounds, numPlayers: numPlayers, creatorName: creatorName } })
   };
 
   const handleBack = () => {
@@ -47,6 +44,10 @@ const Create = () => {
     setNumRounds(event.target.value);
   };
 
+  const handleCreatorNameChange = (event) => {
+    setCreatorName(event.target.value);
+  };
+
   // const handleNumWordChoicesChange = (event) => {
   //   setNumWordChoices(event.target.value);
   // };
@@ -57,6 +58,13 @@ const Create = () => {
         <>
           <h2>Room Settings</h2>
           <div className="input-group">
+            <FormControl fullWidth>
+              <TextField
+                label="Enter Your Name"
+                value={creatorName}
+                onChange={handleCreatorNameChange}
+              />
+            </FormControl>
             <FormControl fullWidth>
               <InputLabel id="num-players-label">Number of Players</InputLabel>
               <Select
@@ -121,9 +129,7 @@ const Create = () => {
           </Button>
 
           {showError && (
-            <p className="error-message">
-              Please fill all the data to Create a Room
-            </p>
+            <p className="error-message">Please fill all the data to Create a Room</p>
           )}
         </>
       </CardContent>
