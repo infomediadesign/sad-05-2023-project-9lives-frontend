@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-import Lobby from "./Lobby";
-import { TextField, Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useNavigate, Navigate } from "react-router-dom";
-
+import {
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const navigate = useNavigate();
   const [numPlayers, setNumPlayers] = useState(2);
   const [numRounds, setNumRounds] = useState(1);
   // const [numWordChoices, setNumWordChoices] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [showError, setShowError] = useState(false);
   const [creatorName, setCreatorName] = useState("");
-
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -27,8 +30,6 @@ const Create = () => {
     console.log("Form submitted:", numPlayers, numRounds, creatorName);
     // if wants to add this  , numWordChoices
     navigate("/lobby", { state: { numRounds: numRounds, numPlayers: numPlayers, creatorName: creatorName } })
-
-    // setIsSubmitted(true);
   };
 
   const handleBack = () => {
@@ -70,7 +71,7 @@ const Create = () => {
                 labelId="num-players-label"
                 id="num-players"
                 value={numPlayers}
-                label="Number Of Players"
+                label="Number of Players"
                 onChange={handleNumPlayersChange}
               >
                 <MenuItem value={2}>2</MenuItem>
@@ -84,7 +85,7 @@ const Create = () => {
                 labelId="num-rounds-label"
                 id="num-rounds"
                 value={numRounds}
-                label="Number Of Rounds"
+                label="Number of Rounds"
                 onChange={handleNumRoundsChange}
               >
                 <MenuItem value={1}>1</MenuItem>
@@ -117,7 +118,13 @@ const Create = () => {
             Create your room
           </Button>
 
-          <Button sx={{ marginTop: "40px" }} type="submit" variant="contained" fullWidth onClick={handleBack}>
+          <Button
+            sx={{ marginTop: "40px" }}
+            type="submit"
+            variant="contained"
+            fullWidth
+            onClick={handleBack}
+          >
             Back
           </Button>
 
