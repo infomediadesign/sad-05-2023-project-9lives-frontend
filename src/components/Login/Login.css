@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .card {
+    display: flex;
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .card h2 {
+    margin-bottom: 20px;
+  }
+  
+  .card form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .card form .MuiTextField-root {
+    width: 100%;
+  }
+  
+  .card form .MuiButton-root {
+    margin-top: 20px;
+  }
+  .message {
+    margin-top: 10px;
+    text-align: center;
+  }
+  .link {
+    color: blue;
+  }
+
+  .error-message {
+    color: #ff0000;
+    font-size: 16px;
+    margin-top: 8px;
+    text-align: center;
+  }
+  
