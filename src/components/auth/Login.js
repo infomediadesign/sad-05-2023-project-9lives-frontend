@@ -14,15 +14,19 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { auth, setAuth, setInLocalStorage } = useGlobalContext();
+  const { auth, setAuth, setInLocalStorage, removeFromLocalStorage } =
+    useGlobalContext();
 
-  const { decodedToken, isExpired } = useJwt(auth.token);
+  const { isExpired } = useJwt(auth.token);
   // console.log("Login: ", isExpired);
   useEffect(() => {
-    if (auth.token && !isExpired) {
-      navigate("/home");
+    if (isExpired) {
+      removeFromLocalStorage();
+      setAuth({ token: "" });
+    } else if (auth.token && !isExpired) {
+      // navigate("/home");
     }
-  }, []);
+  }, [isExpired]);
 
   const handleLogin = (e) => {
     e.preventDefault();

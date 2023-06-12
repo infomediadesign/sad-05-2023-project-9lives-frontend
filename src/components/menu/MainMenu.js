@@ -4,12 +4,17 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import "./MainMenu.css";
+import { useGlobalContext } from "../../utils/Hooks/context";
 
 const MainMenu = () => {
   const navigate = useNavigate();
+  const { setAuth, removeFromLocalStorage } = useGlobalContext();
 
   const handleLogout = () => {
-    console.log("logout ho gaya bc tu");
+    // console.log("logout ho gaya bc tu");
+    removeFromLocalStorage();
+    setAuth({ token: "" });
+    navigate("/login");
   };
 
   return (
@@ -18,19 +23,19 @@ const MainMenu = () => {
         <Card className="innerCard">
           <div className="buttonsDiv">
             <Button
+              style={{ marginBottom: "1rem" }}
+              variant="contained"
+              onClick={() => navigate("/room/create")}
+            >
+              Create
+            </Button>
+            <Button
               className="button1"
               style={{ marginBottom: "1rem" }}
               onClick={() => navigate("/join")}
               variant="contained"
             >
               Join
-            </Button>
-            <Button
-              style={{ marginBottom: "1rem" }}
-              variant="contained"
-              onClick={() => navigate("/room/create")}
-            >
-              Create
             </Button>
             <Button
               className="logout"
