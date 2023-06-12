@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import "./Lobby.css"; // Import the CSS file
-import { useLocation } from "react-router-dom";
+import { useGlobalContext } from "../../../utils/Hooks/context";
 
 const Lobby = ({
-  // numPlayers,
+  // maxPlayers,
   playerNames,
-  // numRounds,
+  // rounds,
   // isCreator
   // numWordChoices
 }) => {
+  const { roomDetails } = useGlobalContext();
   const [isCreator, setIsCreator] = useState(true);
-  const { state } = useLocation();
-  const { numPlayers, numRounds } = state
+  const { maxPlayers, rounds } = roomDetails.setting;
   const handleExit = () => {
     if (isCreator) {
       console.log("Room Deleted");
-    }
-    else {
+    } else {
       console.log("User exited the room");
     }
   };
@@ -25,16 +24,18 @@ const Lobby = ({
       <div className="form-section">
         <h1> LOBBY </h1>
         <h2 className="lobby-heading">Game Settings</h2>
-        <p className="lobby-info">Number of Rounds: {numRounds}</p>
+        <p className="lobby-info">Number of Rounds: {rounds}</p>
         {/* <p className="lobby-info">Number of Word Choices: {numWordChoices}</p> */}
       </div>
       <div className="vertical-line"></div>
       <div className="form-section">
-        <p className="lobby-info">Number of Players: {numPlayers}</p>
+        <p className="lobby-info">Number of Players: {maxPlayers}</p>
         <p className="lobby-info">Player Names:</p>
         <div className="buttons-container">
           <button className="start-button">Start</button>
-          <button className="exit-button" onClick={handleExit}>Exit</button>
+          <button className="exit-button" onClick={handleExit}>
+            Exit
+          </button>
         </div>
       </div>
     </form>

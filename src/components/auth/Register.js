@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, TextField, Button } from "@mui/material";
+import bcrypt from "bcryptjs";
 import "./Register.css";
 import axios from "axios";
 import { __SIGNUP_URL__ } from "../../utils/constants";
@@ -21,7 +22,7 @@ const Register = () => {
       axios
         .post(__SIGNUP_URL__, {
           email,
-          password: password,
+          password: bcrypt.hashSync(password, 10),
         })
         .then((res) => {
           console.log(res.data);

@@ -16,10 +16,18 @@ const AppProvider = (props) => {
     id: JSON.parse(localStorage.getItem("loggedInUser"))?._id ?? "",
     email: JSON.parse(localStorage.getItem("loggedInUser"))?.email ?? "",
   });
-  
+
+  const [roomDetails, setRoomDetails] = useState({});
   return (
     <AppContext.Provider
-      value={{ auth, setAuth, setInLocalStorage, removeFromLocalStorage }}
+      value={{
+        auth,
+        setAuth,
+        setInLocalStorage,
+        removeFromLocalStorage,
+        roomDetails,
+        setRoomDetails,
+      }}
     >
       {props.children}
     </AppContext.Provider>
