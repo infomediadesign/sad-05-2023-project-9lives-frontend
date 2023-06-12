@@ -1,28 +1,48 @@
-name: Continuous Integration
+name: DEPLOY TO DOCKERHUB
 
 on:
   push:
-    branches:
-      - ci_kp
+    branches: ["ci_kp"]
   pull_request:
-    branches:
-      - ci_kp
+    branches: ["ci_kp"]
+
+#
+env:
+  DOCKER_USERE: kishor97p
+  DOCKER_PASSWORD: Kspatil@97
+  DOCKER_REPO: kishor97p/sad-05-2023-project-9lives
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [18.x]
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
+      - name: Build and Tag Docker Image
+        run: |-
+          docker compose create
 
-      - name: Install dependencies
-        run: npm install
+      - name: Docker Login
+        env:
+          DOCKER_USER: kishor97p
+          DOCKER_PASSWORD: Kspatil@97
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-      - name: Run tests
-        run: npm test
+      - name: Build the Docker api image
+        run: docker tag blockiii_mern_ecommerce-api kishor97p/sad-05-2023-project-9lives/kishor97p/sad-05-2023-project-9lives:server
+
+      - name: Docker Push
+        run: docker push kishor97p/kishor97p/sad-05-2023-project-9lives:server
+
+      - name: Build the Docker ecommerce-client image
+        run: docker tag blockiii_mern_ecommerce-client kishor97p/kishor97p/sad-05-2023-project-9lives:client
+
+      - name: Docker Push
+        run: docker push kishor97p/kishor97p/sad-05-2023-project-9lives:client
