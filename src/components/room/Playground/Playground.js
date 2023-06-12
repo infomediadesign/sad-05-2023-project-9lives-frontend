@@ -4,8 +4,9 @@ import Word from '../../Word/Word';
 import Notification from '../../../helpers/Notification/Notification';
 import Popup from '../../../helpers/Popup/Popup';
 import Hearts from './Heart';
+import './Heart.css';
 
-const words = ['faana', 'ramleela', 'vikramvedha', 'singam', 'raazi'];
+const words = ['fanna', 'ramleela', 'vikramvedha', 'singam', 'raazi']; // to be fetched from db
 let selectedWord = words[Math.floor(Math.random() * words.length)];
 
 function Playground() {
@@ -16,6 +17,8 @@ function Playground() {
   const [time, setTime] = useState(60);
   const [arrowPosition, setArrowPosition] = useState(0);
   const [lives, setLives] = useState(9);
+  const [showPopup, setShowPopup] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     const handleKeydown = (event) => {
@@ -46,19 +49,35 @@ function Playground() {
   }, [correctLetters, wrongLetters, playable]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime((prevTime) => prevTime - 1);
-      setArrowPosition((prevPosition) => prevPosition + 1);
-    }, 1000);
+    if (time === 30 && !showPopup) {
+      setShowPopup(true);
+    }
+
+    if (time === 0 ) {
+      setPlayable(false);
+      setGameOver(true);
+    }
+  }, [time, showPopup, lives, correctLetters, selectedWord.length]);
+
+  useEffect(() => {
+    let interval = null;
+    if (playable) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+        setArrowPosition((prevPosition) => prevPosition + 1);
+      }, 1000);
+    }
 
     return () => clearInterval(interval);
-  }, []);
+  }, [playable]);
 
   function playAgain() {
     setPlayable(true);
     setCorrectLetters([]);
     setWrongLetters([]);
     setLives(9);
+    setTime(60);
+    setGameOver(false);
 
     const random = Math.floor(Math.random() * words.length);
     selectedWord = words[random];
@@ -67,20 +86,17 @@ function Playground() {
   return (
     <>
       <div className="game-container">
+        <div className="hearts-slider-container">
+          <div className="hearts-container">
+            <Hearts lives={lives} />
+          </div>
+          <div className="slider-container">
+            <div className="slider-arrow" style={{ left: `${arrowPosition}%` }} />
+            <input type="range" min="0" max="60" value={time} className="slider" readOnly />
+          </div>
+        </div>
         <Wrongletters wrongLetters={wrongLetters} />
         <Word selectedWord={selectedWord} correctLetters={correctLetters} />
-        <Hearts lives={lives} />
-        <div className="slider-container">
-          <div className="slider-arrow" style={{ left: `${arrowPosition}%` }} />
-          <input
-            type="range"
-            min="0"
-            max="60"
-            value={time}
-            className="slider"
-            readOnly
-          />
-        </div>
       </div>
       <Popup
         correctLetters={correctLetters}
@@ -89,10 +105,24 @@ function Playground() {
         setPlayable={setPlayable}
         playAgain={playAgain}
       />
-      <Notification
-        showNotification={showNotification}
-        setShowNotification={setShowNotification}
-      />
+      {showNotification && (
+        <Notification
+          showNotification={showNotification}
+          setShowNotification={setShowNotification}
+        />
+      )}
+      {showPopup && (
+        <div className="popup">
+          <p>Clue</p>
+        </div>
+      )}
+      {gameOver && (
+        <div className="popup">
+          <p>Game Over</p>
+          <button onClick={playAgain}>Play Again</button>
+
+        </div>
+      )}
     </>
   );
 }

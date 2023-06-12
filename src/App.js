@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Header from "./components/Header/Header";
+// import Header from "./components/Header/Header";
 import HandleRoutes from "./components/HandleRoutes";
 import { useJwt } from "react-jwt";
 import { useGlobalContext } from "./utils/Hooks/context";
