@@ -18,6 +18,7 @@ const AppProvider = (props) => {
   });
 
   const [roomDetails, setRoomDetails] = useState({
+    players: [],
     setting: { maxPlayers: null, rounds: null },
   });
   return (
