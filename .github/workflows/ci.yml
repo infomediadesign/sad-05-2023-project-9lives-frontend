@@ -3,10 +3,10 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - main
+      - ci_kp
   pull_request:
     branches:
-      - main
+      - ci_kp
 
 jobs:
   build:
