@@ -26,7 +26,7 @@ jobs:
 
       - name: Build and Tag Docker Image
         run: |-
-          docker compose create
+          docker build -t ninelives-frontend:1.0 .
 
       - name: Docker Login
         env:
@@ -35,14 +35,8 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-      - name: Build the Docker api image
-        run: docker tag blockiii_mern_ecommerce-api kishor97p/sad-05-2023-project-9lives/kishor97p/sad-05-2023-project-9lives:server
+      - name: Rename the tag
+        run: docker tag 968294abee8e kishor97p/sad-05-2023-project-9lives:ninelives-frontend
 
-      - name: Docker Push
-        run: docker push kishor97p/kishor97p/sad-05-2023-project-9lives:server
-
-      - name: Build the Docker ecommerce-client image
-        run: docker tag blockiii_mern_ecommerce-client kishor97p/kishor97p/sad-05-2023-project-9lives:client
-
-      - name: Docker Push
-        run: docker push kishor97p/kishor97p/sad-05-2023-project-9lives:client
+      - name: Push to Dockerhub
+        run: docker push kishor97p/sad-05-2023-project-9lives:ninelives-frontend
