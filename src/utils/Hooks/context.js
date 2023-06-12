@@ -17,7 +17,9 @@ const AppProvider = (props) => {
     email: JSON.parse(localStorage.getItem("loggedInUser"))?.email ?? "",
   });
 
-  const [roomDetails, setRoomDetails] = useState({});
+  const [roomDetails, setRoomDetails] = useState({
+    setting: { maxPlayers: null, rounds: null },
+  });
   return (
     <AppContext.Provider
       value={{

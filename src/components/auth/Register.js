@@ -20,10 +20,14 @@ const Register = () => {
     } else {
       setShowError(false);
       axios
-        .post(__SIGNUP_URL__, {
-          email,
-          password: bcrypt.hashSync(password, 10),
-        })
+        .post(
+          __SIGNUP_URL__,
+          {
+            email,
+            password: bcrypt.hashSync(password, 10),
+          },
+          { headers: {"Content-Type": "application/json"} }
+        )
         .then((res) => {
           console.log(res.data);
           setShowMessage(true);

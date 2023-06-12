@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Lobby.css"; // Import the CSS file
 import { useGlobalContext } from "../../../utils/Hooks/context";
+import { __LOBBY_URL__ } from "../../../utils/constants";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Lobby = ({
   // maxPlayers,
@@ -9,9 +12,34 @@ const Lobby = ({
   // isCreator
   // numWordChoices
 }) => {
-  const { roomDetails } = useGlobalContext();
+  let { roomID } = useParams();
+  const navigate = useNavigate();
+  const { roomDetails, auth, setRoomDetails } = useGlobalContext();
   const [isCreator, setIsCreator] = useState(true);
   const { maxPlayers, rounds } = roomDetails.setting;
+
+  useEffect(() => {
+    axios
+      .post(
+        __LOBBY_URL__,
+        {
+          // email: "raj@gmail.com", // change later
+          gameID: roomID,
+          // userID: "648183422bade7e683c0fe04",
+        },
+        { headers: { Authorization: `Bearer ${auth.token}` } }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setRoomDetails(res.data.roomDetails);
+        navigate(`/lobby/${res.data.roomDetails.roomID}`);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        navigate(`/room/create`);
+      });
+  }, []);
+
   const handleExit = () => {
     if (isCreator) {
       console.log("Room Deleted");
@@ -31,6 +59,7 @@ const Lobby = ({
       <div className="form-section">
         <p className="lobby-info">Number of Players: {maxPlayers}</p>
         <p className="lobby-info">Player Names:</p>
+        {}
         <div className="buttons-container">
           <button className="start-button">Start</button>
           <button className="exit-button" onClick={handleExit}>
