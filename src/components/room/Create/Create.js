@@ -10,6 +10,10 @@ import {
   Select,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "./Create.css";
+import { __CREATE_ROOM__URL__ } from "../../../utils/constants";
+import { useGlobalContext } from "../../../utils/Hooks/context";
+import axios from "axios";
 
 const Create = () => {
   const navigate = useNavigate();
@@ -18,6 +22,8 @@ const Create = () => {
   // const [numWordChoices, setNumWordChoices] = useState("");
   const [showError, setShowError] = useState(false);
   const [creatorName, setCreatorName] = useState("");
+  const { auth, setRoomDetails } = useGlobalContext();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -25,27 +31,33 @@ const Create = () => {
       // || !numWordChoices also this.
       setShowError(true);
       return;
+    } else {
+      axios
+        .post(
+          __CREATE_ROOM__URL__,
+          {
+            playerName: creatorName,
+            maxPlayers: numPlayers,
+            rounds: numRounds,
+          },
+          { headers: { Authorization: `Bearer ${auth.token}` } }
+        )
+        .then((res) => {
+          setRoomDetails(res.data.roomDetails);
+          navigate(`/lobby/${res.data.roomDetails.roomID}`);
+        })
+        .catch((error) => console.log(error.message));
     }
 
-    console.log("Form submitted:", numPlayers, numRounds, creatorName);
-    // if wants to add this  , numWordChoices
-    navigate("/lobby", { state: { numRounds: numRounds, numPlayers: numPlayers, creatorName: creatorName } })
-  };
-
-  const handleBack = () => {
-    navigate("/home");
-  };
-
-  const handleNumPlayersChange = (event) => {
-    setNumPlayers(event.target.value);
-  };
-
-  const handleNumRoundsChange = (event) => {
-    setNumRounds(event.target.value);
-  };
-
-  const handleCreatorNameChange = (event) => {
-    setCreatorName(event.target.value);
+    // console.log("Form submitted:", numPlayers, numRounds, creatorName);
+    // // if wants to add this  , numWordChoices
+    // navigate("/lobby", {
+    //   state: {
+    //     numRounds: numRounds,
+    //     numPlayers: numPlayers,
+    //     creatorName: creatorName,
+    //   },
+    // });
   };
 
   // const handleNumWordChoicesChange = (event) => {
@@ -62,7 +74,7 @@ const Create = () => {
               <TextField
                 label="Enter Your Name"
                 value={creatorName}
-                onChange={handleCreatorNameChange}
+                onChange={(event) => setCreatorName(event.target.value)}
               />
             </FormControl>
             <FormControl fullWidth>
@@ -72,7 +84,7 @@ const Create = () => {
                 id="num-players"
                 value={numPlayers}
                 label="Number of Players"
-                onChange={handleNumPlayersChange}
+                onChange={(event) => setNumPlayers(event.target.value)}
               >
                 <MenuItem value={2}>2</MenuItem>
                 {/* <MenuItem value={3}>3</MenuItem>
@@ -86,7 +98,7 @@ const Create = () => {
                 id="num-rounds"
                 value={numRounds}
                 label="Number of Rounds"
-                onChange={handleNumRoundsChange}
+                onChange={(event) => setNumRounds(event.target.value)}
               >
                 <MenuItem value={1}>1</MenuItem>
                 <MenuItem value={2}>2</MenuItem>
@@ -117,19 +129,20 @@ const Create = () => {
           >
             Create your room
           </Button>
-
           <Button
             sx={{ marginTop: "40px" }}
             type="submit"
             variant="contained"
             fullWidth
-            onClick={handleBack}
+            onClick={() => navigate("/home")}
           >
             Back
           </Button>
 
           {showError && (
-            <p className="error-message">Please fill all the data to Create a Room</p>
+            <p className="error-message">
+              Please fill all the data to Create a Room
+            </p>
           )}
         </>
       </CardContent>

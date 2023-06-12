@@ -23,19 +23,19 @@ const MainMenu = () => {
         <Card className="innerCard">
           <div className="buttonsDiv">
             <Button
+              style={{ marginBottom: "1rem" }}
+              variant="contained"
+              onClick={() => navigate("/room/create")}
+            >
+              Create
+            </Button>
+            <Button
               className="button1"
               style={{ marginBottom: "1rem" }}
               onClick={() => navigate("/join")}
               variant="contained"
             >
               Join
-            </Button>
-            <Button
-              style={{ marginBottom: "1rem" }}
-              variant="contained"
-              onClick={() => navigate("/room/create")}
-            >
-              Create
             </Button>
             <Button
               className="logout"
