@@ -35,8 +35,5 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-      - name: Rename the tag
-        run: docker tag 968294abee8e31cc7c7a7c1087e4c78a9406acae1cb55239f9a8ee5318bf88cb kishor97p/sad-05-2023-project-9lives:ninelives-frontend
-
       - name: Push to Dockerhub
         run: docker push kishor97p/sad-05-2023-project-9lives:ninelives-frontend
