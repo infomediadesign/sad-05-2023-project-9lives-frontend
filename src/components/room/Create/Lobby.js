@@ -10,13 +10,17 @@ import {
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import io from "socket.io-client";
+import Playground from "../Playground/Playground.js";
 
 const Lobby = () => {
   const socket = io(__BASE_URL__ + "/game");
   let { roomID } = useParams();
   const navigate = useNavigate();
-  const { roomDetails, auth, setRoomDetails } = useGlobalContext();
   const [isCreator, setIsCreator] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
+  const [movie, setMovie] = useState(null);
+
+  const { roomDetails, auth, setRoomDetails } = useGlobalContext();
   const { maxPlayers, rounds } = roomDetails.setting;
   const { players, owner } = roomDetails;
 
@@ -31,20 +35,25 @@ const Lobby = () => {
       )
       .then((res) => {
         setRoomDetails(res.data.roomDetails);
-        // Join the game room on component mount and if user is player
         socket.emit("join", res.data.roomDetails);
       })
       .catch((error) => {
         console.log(error.message);
+        socket.disconnect();
         navigate(`/home`);
       });
 
-    socket.on("lobbyState", (lobbyState) => {
-      setRoomDetails({ ...lobbyState });
+    socket.on("start", (val) => {
+      setMovie(val.toLowerCase());
+      setIsStarted(true);
     });
+    // socket.on("lobbyState", (lobbyState) => {
+    //   setRoomDetails({ ...lobbyState });
+    // });
 
     return () => {
-      socket.off("lobbyState");
+      // socket.off("lobbyState");
+      // socket.disconnect();
     };
   }, []);
 
@@ -55,8 +64,20 @@ const Lobby = () => {
   }, [owner, auth.email]);
 
   useEffect(() => {
-    console.log("lobby updated!");
+    if (isStarted) {
+      socket.emit("start", roomID);
+    }
+    console.log("started");
+  }, [isStarted]);
+
+  useEffect(() => {
+    console.log("room updated!");
   }, [roomDetails, players]);
+
+  const handleStart = (e) => {
+    e.preventDefault();
+    setIsStarted(true);
+  };
 
   const handleExit = (e) => {
     e.preventDefault();
@@ -68,6 +89,8 @@ const Lobby = () => {
         .then((res) => {
           setRoomDetails(res.data.roomDetails);
           socket.emit("join", res.data.roomDetails);
+          setIsStarted(false);
+          socket.disconnect();
           navigate("/home");
         })
         .catch((error) => console.log(error));
@@ -84,17 +107,13 @@ const Lobby = () => {
           // console.log(res.data);
           setRoomDetails(res.data.roomDetails);
           socket.emit("join", res.data.roomDetails);
+          socket.disconnect();
           navigate("/home");
         })
         .catch((error) => {
           console.log(error.message);
         });
     }
-  };
-
-  const handleStart = (e) => {
-    e.preventDefault();
-    navigate("/playground/" + roomID);
   };
 
   return (
@@ -106,16 +125,17 @@ const Lobby = () => {
         <p className="lobby-info">Number of Rounds: {rounds}</p>
         <p className="lobby-info">Number of Players: {maxPlayers}</p>
         {/* <p className="lobby-info">Number of Word Choices: {numWordChoices}</p> */}
-      </div>
-      <div className="vertical-line"></div>
-      <div className="form-section">
         <h4 className="lobby-info">Players in lobby</h4>
         {players.length &&
           players.map((player) => {
             return <p key={player.id}>{player.gamerTag}</p>;
           })}
+      </div>
+      <div className="vertical-line"></div>
+      <div className="form-section">
         <div className="buttons-container">
-          {isCreator && (
+          {isStarted && !!movie && <Playground movie={movie} />}
+          {isCreator && !isStarted && (
             <button onClick={handleStart} className="start-button">
               Start
             </button>

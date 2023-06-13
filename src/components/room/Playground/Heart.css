@@ -1,23 +1,27 @@
+.hearts-slider-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 .hearts-container {
-    position: fixed;
-    top: 180px;
-    right: 320px;
-    display: flex;
-    flex-direction: row-reverse;
-  }
-  
-  .heart {
-    font-size: 35px;
-    margin-left: 6px;
-    color: red;
-  }
-  
-  .empty {
-    color: gray;
-  }
-  
-     .slider {
-      width: 70%;
-      
-  }
-    
+  /* position: fixed; */
+  /* top: 180px;
+  right: 320px; */
+  display: flex;
+  flex-direction: row;
+}
+
+.heart {
+  font-size: 35px;
+  margin-left: 6px;
+  color: red;
+}
+
+.empty {
+  color: gray;
+}
+
+.slider {
+  width: 70%;
+}
