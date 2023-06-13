@@ -1,4 +1,4 @@
-name: DEPLOY TO DOCKERHUB
+name: DEPLOY TO DOCKERHUB FOR FRONTEND
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: ["ci_kp"]
 
-#
 env:
   DOCKER_USERE: kishor97p
   DOCKER_PASSWORD: Kspatil@97
