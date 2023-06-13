@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { checkWin } from '../../helpers/Helpers';
 
-const Popup = ({ correctLetters, wrongLetters, selectedWord, setPlayable, playAgain }) => {
+const Popup = ({ correctLetters, lives, selectedWord, playAgain }) => {
   let finalMessage = '';
   let finalMessageRevealWord = '';
   let playable = true;
 
-  if (checkWin(correctLetters, wrongLetters, selectedWord) === 'win') {
+  if (checkWin(correctLetters, lives, selectedWord) === 'win') {
     finalMessage = 'Congratulations! You Won';
     playable = false;
-  } else if (checkWin(correctLetters, wrongLetters, selectedWord) === 'lose') {
+  } else if (checkWin(correctLetters, lives, selectedWord) === 'lose') {
     finalMessage = 'You Lose';
-    finalMessageRevealWord = `the word was: ${selectedWord}`;
+    finalMessageRevealWord = `the movie was: ${selectedWord}`;
     playable = false;
   }
-
-  useEffect(() => {
-    setPlayable(playable);
-  }, [playable, setPlayable]);
 
   return (
     <div className="popup-container" style={finalMessage !== '' ? { display: 'flex' } : {}}>

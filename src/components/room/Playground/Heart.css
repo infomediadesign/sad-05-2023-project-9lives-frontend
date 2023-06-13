@@ -1,0 +1,14 @@
+.hearts-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.heart {
+  font-size: 35px;
+  margin-left: 6px;
+  color: red;
+}
+
+.empty {
+  color: gray;
+}
