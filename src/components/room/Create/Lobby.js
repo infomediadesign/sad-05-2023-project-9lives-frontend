@@ -11,6 +11,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import io from "socket.io-client";
 import Playground from "../Playground/Playground.js";
+import { Button } from "@mui/material";
 
 const Lobby = () => {
   const socket = io(__BASE_URL__ + "/game");
@@ -117,35 +118,50 @@ const Lobby = () => {
   };
 
   return (
-    <form className="lobby-form">
-      <div className="form-section">
+    <div className="lobby-play">
+      <div className="lobby-section">
         <h1> LOBBY </h1>
-        <h2>Room ID: {roomID}</h2>
-        <h3 className="lobby-heading">Game Settings</h3>
-        <p className="lobby-info">Number of Rounds: {rounds}</p>
-        <p className="lobby-info">Number of Players: {maxPlayers}</p>
-        {/* <p className="lobby-info">Number of Word Choices: {numWordChoices}</p> */}
-        <h4 className="lobby-info">Players in lobby</h4>
-        {players.length &&
-          players.map((player) => {
-            return <p key={player.id}>{player.gamerTag}</p>;
-          })}
-      </div>
-      <div className="vertical-line"></div>
-      <div className="form-section">
+        <div className="room-info">
+          <h3>Room ID: {roomID}</h3>
+          <div>
+            <h3 className="lobby-heading">Game Settings</h3>
+            <p className="lobby-info">Number of Rounds: {rounds}</p>
+            <p className="lobby-info">Room Capacity: {maxPlayers}</p>
+            {/* <p className="lobby-info">Number of Word Choices: {numWordChoices}</p> */}
+          </div>
+          <div>
+            <h3 className="lobby-heading">Players in lobby</h3>
+            {players.length &&
+              players.map((player) => {
+                return (
+                  <p className="lobby-info" key={player.id}>
+                    {player.gamerTag}
+                    <span> (score: {player.score} )</span>
+                  </p>
+                );
+              })}
+          </div>
+        </div>
         <div className="buttons-container">
-          {isStarted && !!movie && <Playground movie={movie} />}
           {isCreator && !isStarted && (
-            <button onClick={handleStart} className="start-button">
+            <Button onClick={handleStart} variant="contained" size="small">
               Start
-            </button>
+            </Button>
           )}
-          <button className="exit-button" onClick={handleExit}>
+          <Button
+            onClick={handleExit}
+            variant="outlined"
+            color="error"
+            size="small"
+          >
             Exit
-          </button>
+          </Button>
         </div>
       </div>
-    </form>
+      <div className="play-section">
+        {isStarted && !!movie && <Playground movie={movie} />}
+      </div>
+    </div>
   );
 };
 

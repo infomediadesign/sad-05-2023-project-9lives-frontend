@@ -17,7 +17,7 @@ import axios from "axios";
 
 const Create = () => {
   const navigate = useNavigate();
-  const [numPlayers, setNumPlayers] = useState(2);
+  const [numPlayers, setNumPlayers] = useState(1);
   const [numRounds, setNumRounds] = useState(1);
   // const [numWordChoices, setNumWordChoices] = useState("");
   const [showError, setShowError] = useState(false);
@@ -86,6 +86,7 @@ const Create = () => {
                 label="Number of Players"
                 onChange={(event) => setNumPlayers(event.target.value)}
               >
+                <MenuItem value={1}>1</MenuItem>
                 <MenuItem value={2}>2</MenuItem>
                 {/* <MenuItem value={3}>3</MenuItem>
                   <MenuItem value={4}>4</MenuItem> */}
@@ -94,6 +95,7 @@ const Create = () => {
             <FormControl fullWidth>
               <InputLabel id="num-rounds-label">Number of Rounds</InputLabel>
               <Select
+                disabled
                 labelId="num-rounds-label"
                 id="num-rounds"
                 value={numRounds}
@@ -101,8 +103,8 @@ const Create = () => {
                 onChange={(event) => setNumRounds(event.target.value)}
               >
                 <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
+                {/* <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem> */}
               </Select>
             </FormControl>
             {/* <FormControl fullWidth>
