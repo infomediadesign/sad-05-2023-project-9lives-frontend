@@ -11,9 +11,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import io from "socket.io-client";
 
-const socket = io(__BASE_URL__ + "/game");
-
 const Lobby = () => {
+  const socket = io(__BASE_URL__ + "/game");
   let { roomID } = useParams();
   const navigate = useNavigate();
   const { roomDetails, auth, setRoomDetails } = useGlobalContext();
@@ -37,7 +36,7 @@ const Lobby = () => {
       })
       .catch((error) => {
         console.log(error.message);
-        navigate(`/room/create`);
+        navigate(`/home`);
       });
 
     socket.on("lobbyState", (lobbyState) => {
@@ -63,15 +62,12 @@ const Lobby = () => {
     e.preventDefault();
     if (isCreator) {
       axios
-        .delete(
-          __DELETE_ROOM__URL__,
-          {
-            roomID,
-          },
-          { headers: { Authorization: `Bearer ${auth.token}` } }
-        )
+        .delete(__DELETE_ROOM__URL__ + "/" + roomID, {
+          headers: { Authorization: `Bearer ${auth.token}` },
+        })
         .then((res) => {
           setRoomDetails(res.data.roomDetails);
+          socket.emit("join", res.data.roomDetails);
           navigate("/home");
         })
         .catch((error) => console.log(error));
@@ -87,7 +83,8 @@ const Lobby = () => {
         .then((res) => {
           // console.log(res.data);
           setRoomDetails(res.data.roomDetails);
-          navigate("/home" + roomID);
+          socket.emit("join", res.data.roomDetails);
+          navigate("/home");
         })
         .catch((error) => {
           console.log(error.message);
