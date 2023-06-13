@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import "./MainMenu.css";
 import { useGlobalContext } from "../../utils/Hooks/context";
 
@@ -22,10 +21,16 @@ const MainMenu = () => {
       <h1>MAIN MENU</h1>
       <div className="menu-action">
         <div className="buttonsDiv">
-          <Button variant="contained" onClick={() => navigate("/room/create")}>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/room/create")}
+          >
             Create
           </Button>
-          <Button onClick={() => navigate("/join")} variant="contained">
+          <Button
+            onClick={() => navigate("/join")}
+            variant="contained"
+          >
             Join
           </Button>
           <Button

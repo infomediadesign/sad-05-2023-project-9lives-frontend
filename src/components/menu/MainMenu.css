@@ -2,13 +2,15 @@
   display: flex;
   flex-direction: column;
   align-self: center;
-  padding: 0px 20px;
+  padding: 0px 30px;
+  height: 60%;
+  gap: 30px;
 }
 
 .menu-action {
   display: flex;
   flex-direction: row;
-  gap: 50px;
+  gap: 100px;
   align-items: flex-start;
   text-align: left !important;
 }

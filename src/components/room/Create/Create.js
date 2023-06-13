@@ -19,7 +19,6 @@ const Create = () => {
   const navigate = useNavigate();
   const [numPlayers, setNumPlayers] = useState(1);
   const [numRounds, setNumRounds] = useState(1);
-  // const [numWordChoices, setNumWordChoices] = useState("");
   const [showError, setShowError] = useState(false);
   const [creatorName, setCreatorName] = useState("");
   const { auth, setRoomDetails } = useGlobalContext();
@@ -28,7 +27,6 @@ const Create = () => {
     e.preventDefault();
 
     if (!numPlayers || !numRounds || !creatorName) {
-      // || !numWordChoices also this.
       setShowError(true);
       return;
     } else {
@@ -48,21 +46,7 @@ const Create = () => {
         })
         .catch((error) => console.log(error.message));
     }
-
-    // console.log("Form submitted:", numPlayers, numRounds, creatorName);
-    // // if wants to add this  , numWordChoices
-    // navigate("/lobby", {
-    //   state: {
-    //     numRounds: numRounds,
-    //     numPlayers: numPlayers,
-    //     creatorName: creatorName,
-    //   },
-    // });
   };
-
-  // const handleNumWordChoicesChange = (event) => {
-  //   setNumWordChoices(event.target.value);
-  // };
 
   return (
     <Card className="create-card">
@@ -107,40 +91,27 @@ const Create = () => {
                 <MenuItem value={3}>3</MenuItem> */}
               </Select>
             </FormControl>
-            {/* <FormControl fullWidth>
-                <InputLabel id="num-words-label">Number of Word Choices</InputLabel>
-                <Select
-                  labelId="num-words-label"
-                  id="num-words"
-                  value={numWordChoices}
-                  label="Number of Word Choices"
-                  onChange={handleNumWordChoicesChange}
-                >
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={4}>4</MenuItem>
-                  <MenuItem value={5}>5</MenuItem>
-                </Select>
-              </FormControl> */}
           </div>
-          <Button
-            sx={{ marginTop: "40px" }}
-            type="submit"
-            variant="contained"
-            fullWidth
-            onClick={handleSubmit}
-          >
-            Create your room
-          </Button>
-          <Button
-            sx={{ marginTop: "40px" }}
-            type="submit"
-            variant="contained"
-            fullWidth
-            onClick={() => navigate("/home")}
-          >
-            Back
-          </Button>
-
+          <div>
+            <Button
+              sx={{ marginTop: "30px" }}
+              type="submit"
+              variant="contained"
+              fullWidth
+              onClick={handleSubmit}
+            >
+              Create your room
+            </Button>
+            <Button
+              sx={{ marginTop: "20px" }}
+              type="submit"
+              variant="contained"
+              fullWidth
+              onClick={() => navigate("/home")}
+            >
+              Back
+            </Button>
+          </div>
           {showError && (
             <p className="error-message">
               Please fill all the data to Create a Room
