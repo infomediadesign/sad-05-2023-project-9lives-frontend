@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Wrongletters from "../../Word/Wrongletters/Wrongletters";
-import Word from "../../Word/Word";
+import Wrongletters from "./Word/Wrongletters/Wrongletters";
+import Word from "./Word/Word";
 import Notification from "../../../helpers/Notification/Notification";
 import Popup from "../../../helpers/Popup/Popup";
 import Hearts from "./Heart";
 import axios from "axios";
-import "./Heart.css";
+import "./Playground.css";
 import { useParams } from "react-router-dom";
 import { useGlobalContext } from "../../../utils/Hooks/context";
 import io from "socket.io-client";
@@ -41,9 +41,9 @@ const Playground = (props) => {
       })
       .catch((err) => console.log(err.message));
     // Listen for game state updates
-    socket.on("dash", ({ dash }) => {
-      console.log(dash);
-      setSelectedWord(dash);
+    socket.on("start", (movie) => {
+      console.log(movie)
+      setSelectedWord(movie);
     });
   }, []);
 
@@ -77,14 +77,15 @@ const Playground = (props) => {
 
   useEffect(() => {
     if (time === 30 && !showPopup) {
-      setShowPopup(true);
+      // setShowPopup(true);
     }
 
     if (time === 0) {
+      setLives(0);
       setPlayable(false);
       setGameOver(true);
     }
-  }, [time, showPopup, lives, correctLetters, selectedWord.length]);
+  }, [time, showPopup, correctLetters, selectedWord.length]);
 
   useEffect(() => {
     let interval = null;
@@ -108,16 +109,13 @@ const Playground = (props) => {
 
     // const random = Math.floor(Math.random() * words.length);
     // selectedWord = words[random];
-    socket.emit("dash", roomID);
+    socket.emit("start", roomID);
   }
 
   return (
     <>
       <div className="game-container">
         <div className="hearts-slider-container">
-          <div className="hearts-container">
-            <Hearts lives={lives} />
-          </div>
           <div className="slider-container">
             <div
               className="slider-arrow"
@@ -133,15 +131,17 @@ const Playground = (props) => {
             />
             {time}
           </div>
+          <div className="hearts-container">
+            <Hearts lives={lives} />
+          </div>
         </div>
-        <Wrongletters wrongLetters={wrongLetters} />
         <Word selectedWord={selectedWord} correctLetters={correctLetters} />
+        <Wrongletters wrongLetters={wrongLetters} />
       </div>
       <Popup
         correctLetters={correctLetters}
-        wrongLetters={wrongLetters}
+        lives={lives}
         selectedWord={selectedWord}
-        setPlayable={setPlayable}
         playAgain={playAgain}
       />
       {showNotification && (
@@ -150,12 +150,12 @@ const Playground = (props) => {
           setShowNotification={setShowNotification}
         />
       )}
-      {gameOver && (
+      {/* {gameOver && (
         <div className="popup">
           <p>Game Over</p>
-          <button onClick={playAgain}>Play Again</button>
+          <Button onClick={playAgain}>Play Again</Button>
         </div>
-      )}
+      )} */}
     </>
   );
 };
