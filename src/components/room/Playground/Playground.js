@@ -26,7 +26,6 @@ const Playground = (props) => {
   const [arrowPosition, setArrowPosition] = useState(0);
   const [lives, setLives] = useState(9);
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedWord, setSelectedWord] = useState(props.movie);
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
@@ -37,13 +36,13 @@ const Playground = (props) => {
       .then((res) => {
         // setRoomDetails(res.data.roomDetails);
         // setGameState(res.data.roomDetails);
-        socket.emit("dash", roomID);
+        // socket.emit("start", roomID);
       })
       .catch((err) => console.log(err.message));
+
     // Listen for game state updates
     socket.on("start", (movie) => {
-      console.log(movie)
-      setSelectedWord(movie);
+      console.log(movie)(movie);
     });
   }, []);
 
@@ -53,7 +52,7 @@ const Playground = (props) => {
       if (playable && keyCode >= 65 && keyCode <= 90) {
         const letter = key.toLowerCase();
 
-        if (selectedWord.includes(letter)) {
+        if (props.movie.includes(letter)) {
           if (!correctLetters.includes(letter)) {
             setCorrectLetters((currentLetters) => [...currentLetters, letter]);
           } else {
@@ -85,7 +84,7 @@ const Playground = (props) => {
       setPlayable(false);
       setGameOver(true);
     }
-  }, [time, showPopup, correctLetters, selectedWord.length]);
+  }, [time, showPopup, correctLetters, props.movie.length]);
 
   useEffect(() => {
     let interval = null;
@@ -107,9 +106,9 @@ const Playground = (props) => {
     setTime(60);
     setGameOver(false);
 
-    // const random = Math.floor(Math.random() * words.length);
-    // selectedWord = words[random];
     socket.emit("start", roomID);
+    // const random = Math.floor(Math.random() * words.length);
+    // props.movie = words[random];
   }
 
   return (
@@ -135,13 +134,13 @@ const Playground = (props) => {
             <Hearts lives={lives} />
           </div>
         </div>
-        <Word selectedWord={selectedWord} correctLetters={correctLetters} />
+        <Word selectedWord={props.movie} correctLetters={correctLetters} />
         <Wrongletters wrongLetters={wrongLetters} />
       </div>
       <Popup
         correctLetters={correctLetters}
         lives={lives}
-        selectedWord={selectedWord}
+        selectedWord={props.movie}
         playAgain={playAgain}
       />
       {showNotification && (
@@ -150,12 +149,6 @@ const Playground = (props) => {
           setShowNotification={setShowNotification}
         />
       )}
-      {/* {gameOver && (
-        <div className="popup">
-          <p>Game Over</p>
-          <Button onClick={playAgain}>Play Again</Button>
-        </div>
-      )} */}
     </>
   );
 };

@@ -159,7 +159,9 @@ const Lobby = () => {
         </div>
       </div>
       <div className="play-section">
-        {isStarted && !!movie && <Playground movie={movie} />}
+        {isStarted && !!movie && (
+          <Playground movie={movie} setMovie={setMovie} />
+        )}
       </div>
     </div>
   );
