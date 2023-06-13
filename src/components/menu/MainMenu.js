@@ -21,7 +21,7 @@ const MainMenu = () => {
     <div>
       <div className="flex">
         <h1>MAIN MENU</h1>
-        <Card className="innerCard">
+        <Card className="outerCard">
           <div className="buttonsDiv">
             <Button
               style={{ marginBottom: "1rem" }}
@@ -48,20 +48,17 @@ const MainMenu = () => {
             </Button>
           </div>
 
-          <div className="card">
-            <CardContent>
-              <h1>How to Play</h1>
-              <h3>
-                <ol>
-                  <li>Create/Join Room</li>
-                  <li>Start the game</li>
-                  <li>Guess the movie</li>
-                </ol>
-              </h3>
-              <h2>That's it! Have fun! :)</h2>
-              
-            </CardContent>
-          </div>
+          <CardContent>
+            <h1>How to Play</h1>
+            <h3>
+              <ol>
+                <li>Create/Join Room</li>
+                <li>Start the game</li>
+                <li>Guess the movie</li>
+              </ol>
+            </h3>
+            <h2>That's it! Have fun! :)</h2>
+          </CardContent>
         </Card>
       </div>
     </div>

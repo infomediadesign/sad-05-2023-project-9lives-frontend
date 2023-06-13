@@ -1,54 +1,49 @@
-
-.innerCard{
-    display: flex;
-    text-align: left;
+.outerCard {
+  display: flex;
+  text-align: left !important;
 }
-.button1{
+
+.button1 {
   margin-bottom: 1rem;
 }
 
 
 
-.buttonsDiv{
+.buttonsDiv {
   display: flex;
   flex-direction: column;
   margin-left: 1rem;
   margin-top: auto;
   margin-bottom: auto;
   margin-top: 30px;
-  
+
 }
 
-   .card-container {
-    display: flex;
-    justify-content: center;
-    width: 30px;
-  }
-  
+.card-container {
+  display: flex;
+  justify-content: center;
+  width: 30px;
+}
 
-  .card {
-    width: 400px;
-    margin: 30px;
-    padding: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    text-align: left
-  };
-  
-  h1 {
-    margin-bottom: 70px;
-    text-align: center;
-  }
-  
-  form {
-    display: flex;
-    justify-content: center;
-    
-  }
-  
-  button {
-    margin-top: 20px;
-    justify-content: center;
-    
-  }
-  
+
+.innerCard {
+  width: 400px;
+  margin: 30px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  text-align: left;
+  height: fit-content;
+  align-self: center;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+
+}
+
+button {
+  margin-top: 20px;
+  justify-content: center;
+
+}

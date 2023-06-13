@@ -1,12 +1,8 @@
 .lobby-play {
-  margin: auto auto;
-  margin-top: 50px;
-  padding: 0px 50px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  width: 200%;
-  height: 800px;
+  width: 100%;
 }
 
 .lobby-section {
