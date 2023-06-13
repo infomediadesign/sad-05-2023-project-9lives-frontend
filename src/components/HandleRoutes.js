@@ -5,7 +5,7 @@ import Register from "./auth/Register";
 import MainMenu from "./menu/MainMenu";
 import Join from "./room/Join/Join";
 import Create from "./room/Create/Create";
-import Playground from "./room/Playground/Playground";
+import Playground from "./room/Playground/Playground.js";
 import Lobby from "./room/Create/Lobby";
 import ProtectedRoute from "../utils/ProtectedRoute";
 
@@ -21,7 +21,7 @@ const HandleRoutes = () => {
         <Route path="/join" element={<Join />} />
         <Route path="/room/create" element={<Create />} />
         <Route path="/lobby/:roomID" element={<Lobby />} />
-        <Route path="/playground/:roomID" element={<Playground />} />
+        {/* <Route path="/playground/:roomID" element={<Playground />} /> */}
       </Route>
 
       <Route path="*" element={<p>There's nothing here: 404!</p>} />

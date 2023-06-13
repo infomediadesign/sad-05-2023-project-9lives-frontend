@@ -9,7 +9,7 @@ const Join = () => {
   const navigate = useNavigate();
   const [roomid, setRoomId] = useState("");
   const [name, setName] = useState("");
-  const { auth } = useGlobalContext();
+  const { auth, setRoomDetails } = useGlobalContext();
   const [showError, setShowError] = useState(false);
 
   const handleSubmit = (event) => {
@@ -18,14 +18,15 @@ const Join = () => {
       .patch(
         __JOIN_URL__,
         {
-          email: "raj@gmail.com", // change later
+          playerName: name,
           gameID: roomid,
           userID: "648183422bade7e683c0fe04",
         },
         { headers: { Authorization: `Bearer ${auth.token}` } }
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+        setRoomDetails(res.data.roomDetails);
         navigate("/lobby/" + roomid);
       })
       .catch((error) => {
@@ -44,7 +45,7 @@ const Join = () => {
         <CardContent>
           <h2> Please Enter the Room Id</h2>
           <form onSubmit={handleSubmit}>
-          <TextField
+            <TextField
               label="Enter Your Name"
               variant="outlined"
               fullWidth

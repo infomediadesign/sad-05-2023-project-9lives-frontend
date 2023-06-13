@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import Wrongletters from '../../Word/Wrongletters/Wrongletters';
-import Word from '../../Word/Word';
-import Notification from '../../../helpers/Notification/Notification';
-import Popup from '../../../helpers/Popup/Popup';
-import Hearts from './Heart';
-import './Heart.css';
+import React, { useState, useEffect } from "react";
+import Wrongletters from "../../Word/Wrongletters/Wrongletters";
+import Word from "../../Word/Word";
+import Notification from "../../../helpers/Notification/Notification";
+import Popup from "../../../helpers/Popup/Popup";
+import Hearts from "./Heart";
+import axios from "axios";
+import "./Heart.css";
+import { useParams } from "react-router-dom";
+import { useGlobalContext } from "../../../utils/Hooks/context";
+import io from "socket.io-client";
+import { __BASE_URL__, __GAME_DATA_URI__ } from "../../../utils/constants";
 
-const words = ['fanna', 'ramleela', 'vikramvedha', 'singam', 'raazi']; // to be fetched from db
-let selectedWord = words[Math.floor(Math.random() * words.length)];
+// const words = ["fanna", "ramleela", "vikramvedha", "singam", "raazi"]; // to be fetched from db
 
-function Playground() {
+const Playground = (props) => {
+  const socket = io(__BASE_URL__ + "/game");
+  const { roomID } = useParams();
+  const { auth, roomDetails, setRoomDetails } = useGlobalContext();
+
   const [playable, setPlayable] = useState(true);
   const [correctLetters, setCorrectLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
@@ -18,7 +26,26 @@ function Playground() {
   const [arrowPosition, setArrowPosition] = useState(0);
   const [lives, setLives] = useState(9);
   const [showPopup, setShowPopup] = useState(false);
+  const [selectedWord, setSelectedWord] = useState(props.movie);
   const [gameOver, setGameOver] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(__GAME_DATA_URI__ + "/" + roomID, {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      })
+      .then((res) => {
+        // setRoomDetails(res.data.roomDetails);
+        // setGameState(res.data.roomDetails);
+        socket.emit("dash", roomID);
+      })
+      .catch((err) => console.log(err.message));
+    // Listen for game state updates
+    socket.on("dash", ({ dash }) => {
+      console.log(dash);
+      setSelectedWord(dash);
+    });
+  }, []);
 
   useEffect(() => {
     const handleKeydown = (event) => {
@@ -43,9 +70,9 @@ function Playground() {
       }
     };
 
-    window.addEventListener('keydown', handleKeydown);
+    window.addEventListener("keydown", handleKeydown);
 
-    return () => window.removeEventListener('keydown', handleKeydown);
+    return () => window.removeEventListener("keydown", handleKeydown);
   }, [correctLetters, wrongLetters, playable]);
 
   useEffect(() => {
@@ -53,7 +80,7 @@ function Playground() {
       setShowPopup(true);
     }
 
-    if (time === 0 ) {
+    if (time === 0) {
       setPlayable(false);
       setGameOver(true);
     }
@@ -79,8 +106,9 @@ function Playground() {
     setTime(60);
     setGameOver(false);
 
-    const random = Math.floor(Math.random() * words.length);
-    selectedWord = words[random];
+    // const random = Math.floor(Math.random() * words.length);
+    // selectedWord = words[random];
+    socket.emit("dash", roomID);
   }
 
   return (
@@ -91,8 +119,19 @@ function Playground() {
             <Hearts lives={lives} />
           </div>
           <div className="slider-container">
-            <div className="slider-arrow" style={{ left: `${arrowPosition}%` }} />
-            <input type="range" min="0" max="60" value={time} className="slider" readOnly />
+            <div
+              className="slider-arrow"
+              style={{ left: `${arrowPosition}%` }}
+            />
+            <input
+              type="range"
+              min="0"
+              max="60"
+              value={time}
+              className="slider"
+              readOnly
+            />
+            {time}
           </div>
         </div>
         <Wrongletters wrongLetters={wrongLetters} />
@@ -111,20 +150,14 @@ function Playground() {
           setShowNotification={setShowNotification}
         />
       )}
-      {showPopup && (
-        <div className="popup">
-          <p>Clue</p>
-        </div>
-      )}
       {gameOver && (
         <div className="popup">
           <p>Game Over</p>
           <button onClick={playAgain}>Play Again</button>
-
         </div>
       )}
     </>
   );
-}
+};
 
 export default Playground;
