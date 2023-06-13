@@ -3,18 +3,15 @@ import "./Lobby.css"; // Import the CSS file
 import { useGlobalContext } from "../../../utils/Hooks/context";
 import {
   __LOBBY_URL__,
-  __BASE_URL__,
   __DELETE_ROOM__URL__,
   __LEAVE_URL__,
 } from "../../../utils/constants";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import io from "socket.io-client";
 import Playground from "../Playground/Playground.js";
 import { Button } from "@mui/material";
-
+import { socket } from "../../../socket";
 const Lobby = () => {
-  const socket = io(__BASE_URL__ + "/game");
   let { roomID } = useParams();
   const navigate = useNavigate();
   const [isCreator, setIsCreator] = useState(false);
@@ -26,6 +23,7 @@ const Lobby = () => {
   const { players, owner } = roomDetails;
 
   useEffect(() => {
+    socket.connect();
     axios
       .post(
         __LOBBY_URL__,
@@ -54,7 +52,7 @@ const Lobby = () => {
 
     return () => {
       // socket.off("lobbyState");
-      // socket.disconnect();
+      socket.disconnect();
     };
   }, []);
 
@@ -160,7 +158,7 @@ const Lobby = () => {
       </div>
       <div className="play-section">
         {isStarted && !!movie && (
-          <Playground movie={movie} setMovie={setMovie} />
+          <Playground movie={movie} setMovie={setMovie} isCreator={isCreator} />
         )}
       </div>
     </div>

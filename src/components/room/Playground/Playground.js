@@ -8,13 +8,12 @@ import axios from "axios";
 import "./Playground.css";
 import { useParams } from "react-router-dom";
 import { useGlobalContext } from "../../../utils/Hooks/context";
-import io from "socket.io-client";
-import { __BASE_URL__, __GAME_DATA_URI__ } from "../../../utils/constants";
+import { socket } from "../../../socket";
+import { __GAME_DATA_URI__ } from "../../../utils/constants";
 
 // const words = ["fanna", "ramleela", "vikramvedha", "singam", "raazi"]; // to be fetched from db
 
 const Playground = (props) => {
-  const socket = io(__BASE_URL__ + "/game");
   const { roomID } = useParams();
   const { auth, roomDetails, setRoomDetails } = useGlobalContext();
 
@@ -25,6 +24,7 @@ const Playground = (props) => {
   const [time, setTime] = useState(60);
   const [arrowPosition, setArrowPosition] = useState(0);
   const [lives, setLives] = useState(9);
+  const [storedTime, setStoredTime] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const [gameOver, setGameOver] = useState(false);
 
@@ -41,9 +41,9 @@ const Playground = (props) => {
       .catch((err) => console.log(err.message));
 
     // Listen for game state updates
-    socket.on("start", (movie) => {
-      console.log(movie)(movie);
-    });
+    // socket.on("start", (movie) => {
+    //   set
+    // });
   }, []);
 
   useEffect(() => {
@@ -138,8 +138,11 @@ const Playground = (props) => {
         <Wrongletters wrongLetters={wrongLetters} />
       </div>
       <Popup
+        setStoredTime={setStoredTime}
+        isCreator={props.isCreator}
         correctLetters={correctLetters}
         lives={lives}
+        time
         selectedWord={props.movie}
         playAgain={playAgain}
       />
