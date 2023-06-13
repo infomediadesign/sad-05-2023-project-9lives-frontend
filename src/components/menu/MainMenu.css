@@ -1,49 +1,39 @@
-.outerCard {
+.menu {
   display: flex;
+  flex-direction: column;
+  align-self: center;
+  padding: 0px 20px;
+}
+
+.menu-action {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  align-items: flex-start;
   text-align: left !important;
 }
-
-.button1 {
-  margin-bottom: 1rem;
-}
-
-
 
 .buttonsDiv {
   display: flex;
   flex-direction: column;
-  margin-left: 1rem;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-top: 30px;
-
+  gap: 1rem;
 }
 
-.card-container {
+.instructions {
   display: flex;
-  justify-content: center;
-  width: 30px;
-}
-
-
-.innerCard {
-  width: 400px;
-  margin: 30px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  text-align: left;
+  flex-direction: column;
   height: fit-content;
   align-self: center;
 }
 
-form {
-  display: flex;
-  justify-content: center;
-
+.instructions h1,
+.instructions h3,
+.instructions ol {
+  margin: 0;
+  margin-bottom: 10px;
 }
 
-button {
-  margin-top: 20px;
-  justify-content: center;
-
+.instructions h2 {
+  margin: 0;
+  margin-bottom: 30px;
 }

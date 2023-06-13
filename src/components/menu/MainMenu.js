@@ -18,50 +18,39 @@ const MainMenu = () => {
   };
 
   return (
-    <div>
-      <div className="flex">
-        <h1>MAIN MENU</h1>
-        <Card className="outerCard">
-          <div className="buttonsDiv">
-            <Button
-              style={{ marginBottom: "1rem" }}
-              variant="contained"
-              onClick={() => navigate("/room/create")}
-            >
-              Create
-            </Button>
-            <Button
-              className="button1"
-              style={{ marginBottom: "1rem" }}
-              onClick={() => navigate("/join")}
-              variant="contained"
-            >
-              Join
-            </Button>
-            <Button
-              className="logout"
-              variant="contained"
-              onClick={handleLogout}
-              style={{ backgroundColor: "rgb(218, 73, 73)" }}
-            >
-              Logout
-            </Button>
-          </div>
+    <Card className="menu">
+      <h1>MAIN MENU</h1>
+      <div className="menu-action">
+        <div className="buttonsDiv">
+          <Button variant="contained" onClick={() => navigate("/room/create")}>
+            Create
+          </Button>
+          <Button onClick={() => navigate("/join")} variant="contained">
+            Join
+          </Button>
+          <Button
+            className="logout"
+            variant="contained"
+            onClick={handleLogout}
+            style={{ backgroundColor: "rgb(218, 73, 73)" }}
+          >
+            Logout
+          </Button>
+        </div>
 
-          <CardContent>
-            <h1>How to Play</h1>
-            <h3>
-              <ol>
-                <li>Create/Join Room</li>
-                <li>Start the game</li>
-                <li>Guess the movie</li>
-              </ol>
-            </h3>
-            <h2>That's it! Have fun! :)</h2>
-          </CardContent>
-        </Card>
+        <div className="instructions">
+          <h1>How to Play</h1>
+          <h3>
+            <ol>
+              <li>Create/Join Room</li>
+              <li>Start the game</li>
+              <li>Guess the movie</li>
+            </ol>
+          </h3>
+          <h2>That's it! Have fun! :)</h2>
+        </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
