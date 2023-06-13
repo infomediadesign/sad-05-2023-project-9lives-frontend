@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Card, CardContent, TextField, Button } from "@mui/material";
+import { Card, TextField, Button } from "@mui/material";
 import bcrypt from "bcryptjs";
 import "./Register.css";
 import axios from "axios";
@@ -42,8 +42,7 @@ const Register = () => {
 
   return (
     <Card className="card">
-      <CardContent>
-        <h2>Register</h2>
+        <h1>Register</h1>
         <form onSubmit={handleRegister}>
           <div className="input-group">
             <TextField
@@ -78,7 +77,6 @@ const Register = () => {
             </Link>
           </p>
         </form>
-      </CardContent>
     </Card>
   );
 };

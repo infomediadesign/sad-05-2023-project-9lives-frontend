@@ -1,10 +1,9 @@
-
-
-import React from 'react';
+import React from "react";
+import "./Heart.css";
 
 const Hearts = ({ lives }) => {
   const heartIcons = Array.from({ length: 9 }, (_, index) => (
-    <span key={index} className={`heart ${index >= lives ? 'empty' : ''}`}>
+    <span key={index} className={`heart ${index >= lives ? "empty" : ""}`}>
       &hearts;
     </span>
   ));
@@ -12,10 +11,7 @@ const Hearts = ({ lives }) => {
   return (
     <div className="hearts-container">
       {heartIcons.map((heart, index) => (
-        <React.Fragment key={index}>
-          {heart}
-          {' '}
-        </React.Fragment>
+        <React.Fragment key={index}>{heart} </React.Fragment>
       ))}
     </div>
   );

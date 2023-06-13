@@ -1,13 +1,4 @@
-.hearts-slider-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
 .hearts-container {
-  /* position: fixed; */
-  /* top: 180px;
-  right: 320px; */
   display: flex;
   flex-direction: row;
 }
@@ -20,8 +11,4 @@
 
 .empty {
   color: gray;
-}
-
-.slider {
-  width: 70%;
 }

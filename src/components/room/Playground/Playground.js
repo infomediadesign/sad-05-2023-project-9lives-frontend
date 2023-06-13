@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Wrongletters from "../../Word/Wrongletters/Wrongletters";
-import Word from "../../Word/Word";
+import Wrongletters from "./Word/Wrongletters/Wrongletters";
+import Word from "./Word/Word";
 import Notification from "../../../helpers/Notification/Notification";
 import Popup from "../../../helpers/Popup/Popup";
 import Hearts from "./Heart";
 import axios from "axios";
-import "./Heart.css";
+import "./Playground.css";
 import { useParams } from "react-router-dom";
 import { useGlobalContext } from "../../../utils/Hooks/context";
 import io from "socket.io-client";
@@ -26,7 +26,6 @@ const Playground = (props) => {
   const [arrowPosition, setArrowPosition] = useState(0);
   const [lives, setLives] = useState(9);
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedWord, setSelectedWord] = useState(props.movie);
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
@@ -37,13 +36,13 @@ const Playground = (props) => {
       .then((res) => {
         // setRoomDetails(res.data.roomDetails);
         // setGameState(res.data.roomDetails);
-        socket.emit("dash", roomID);
+        // socket.emit("start", roomID);
       })
       .catch((err) => console.log(err.message));
+
     // Listen for game state updates
-    socket.on("dash", ({ dash }) => {
-      console.log(dash);
-      setSelectedWord(dash);
+    socket.on("start", (movie) => {
+      console.log(movie)(movie);
     });
   }, []);
 
@@ -53,7 +52,7 @@ const Playground = (props) => {
       if (playable && keyCode >= 65 && keyCode <= 90) {
         const letter = key.toLowerCase();
 
-        if (selectedWord.includes(letter)) {
+        if (props.movie.includes(letter)) {
           if (!correctLetters.includes(letter)) {
             setCorrectLetters((currentLetters) => [...currentLetters, letter]);
           } else {
@@ -77,14 +76,15 @@ const Playground = (props) => {
 
   useEffect(() => {
     if (time === 30 && !showPopup) {
-      setShowPopup(true);
+      // setShowPopup(true);
     }
 
     if (time === 0) {
+      setLives(0);
       setPlayable(false);
       setGameOver(true);
     }
-  }, [time, showPopup, lives, correctLetters, selectedWord.length]);
+  }, [time, showPopup, correctLetters, props.movie.length]);
 
   useEffect(() => {
     let interval = null;
@@ -106,18 +106,15 @@ const Playground = (props) => {
     setTime(60);
     setGameOver(false);
 
+    socket.emit("start", roomID);
     // const random = Math.floor(Math.random() * words.length);
-    // selectedWord = words[random];
-    socket.emit("dash", roomID);
+    // props.movie = words[random];
   }
 
   return (
     <>
       <div className="game-container">
         <div className="hearts-slider-container">
-          <div className="hearts-container">
-            <Hearts lives={lives} />
-          </div>
           <div className="slider-container">
             <div
               className="slider-arrow"
@@ -133,15 +130,17 @@ const Playground = (props) => {
             />
             {time}
           </div>
+          <div className="hearts-container">
+            <Hearts lives={lives} />
+          </div>
         </div>
+        <Word selectedWord={props.movie} correctLetters={correctLetters} />
         <Wrongletters wrongLetters={wrongLetters} />
-        <Word selectedWord={selectedWord} correctLetters={correctLetters} />
       </div>
       <Popup
         correctLetters={correctLetters}
-        wrongLetters={wrongLetters}
-        selectedWord={selectedWord}
-        setPlayable={setPlayable}
+        lives={lives}
+        selectedWord={props.movie}
         playAgain={playAgain}
       />
       {showNotification && (
@@ -149,12 +148,6 @@ const Playground = (props) => {
           showNotification={showNotification}
           setShowNotification={setShowNotification}
         />
-      )}
-      {gameOver && (
-        <div className="popup">
-          <p>Game Over</p>
-          <button onClick={playAgain}>Play Again</button>
-        </div>
       )}
     </>
   );
