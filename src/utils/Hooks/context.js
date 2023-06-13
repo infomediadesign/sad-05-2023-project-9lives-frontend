@@ -21,6 +21,9 @@ const AppProvider = (props) => {
     players: [],
     setting: { maxPlayers: null, rounds: null },
   });
+
+  const [socket, setSocket] = useState(null);
+
   return (
     <AppContext.Provider
       value={{
@@ -30,6 +33,8 @@ const AppProvider = (props) => {
         removeFromLocalStorage,
         roomDetails,
         setRoomDetails,
+        socket,
+        setSocket,
       }}
     >
       {props.children}

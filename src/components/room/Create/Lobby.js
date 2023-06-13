@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./Lobby.css"; // Import the CSS file
 import { useGlobalContext } from "../../../utils/Hooks/context";
-import { __LOBBY_URL__ } from "../../../utils/constants";
+import {
+  __LOBBY_URL__,
+  __BASE_URL__,
+  __DELETE_ROOM__URL__,
+  __LEAVE_URL__,
+} from "../../../utils/constants";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import io from "socket.io-client";
+
+const socket = io(__BASE_URL__ + "/game");
 
 const Lobby = () => {
   let { roomID } = useParams();
@@ -18,35 +26,80 @@ const Lobby = () => {
       .post(
         __LOBBY_URL__,
         {
-          // email: "raj@gmail.com", // change later
           gameID: roomID,
-          // userID: "648183422bade7e683c0fe04",
         },
         { headers: { Authorization: `Bearer ${auth.token}` } }
       )
       .then((res) => {
-        console.log(res.data);
         setRoomDetails(res.data.roomDetails);
-        navigate(`/lobby/${res.data.roomDetails.roomID}`);
+        // Join the game room on component mount and if user is player
+        socket.emit("join", res.data.roomDetails);
       })
       .catch((error) => {
         console.log(error.message);
         navigate(`/room/create`);
       });
 
+    socket.on("lobbyState", (lobbyState) => {
+      setRoomDetails({ ...lobbyState });
+    });
+
+    return () => {
+      socket.off("lobbyState");
+    };
+  }, []);
+
+  useEffect(() => {
     if (owner === auth.email) {
       setIsCreator(true);
     } else setIsCreator(false);
-  }, []);
+  }, [owner, auth.email]);
+
+  useEffect(() => {
+    console.log("lobby updated!");
+  }, [roomDetails, players]);
 
   const handleExit = (e) => {
     e.preventDefault();
     if (isCreator) {
-      console.log("Room Deleted");
+      axios
+        .delete(
+          __DELETE_ROOM__URL__,
+          {
+            roomID,
+          },
+          { headers: { Authorization: `Bearer ${auth.token}` } }
+        )
+        .then((res) => {
+          setRoomDetails(res.data.roomDetails);
+          navigate("/home");
+        })
+        .catch((error) => console.log(error));
     } else {
-      console.log("User exited the room");
+      axios
+        .patch(
+          __LEAVE_URL__,
+          {
+            gameID: roomID,
+          },
+          { headers: { Authorization: `Bearer ${auth.token}` } }
+        )
+        .then((res) => {
+          // console.log(res.data);
+          setRoomDetails(res.data.roomDetails);
+          navigate("/home" + roomID);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     }
   };
+
+  const handleStart = (e) => {
+    e.preventDefault();
+    navigate("/playground/" + roomID);
+  };
+
   return (
     <form className="lobby-form">
       <div className="form-section">
@@ -65,7 +118,11 @@ const Lobby = () => {
             return <p key={player.id}>{player.gamerTag}</p>;
           })}
         <div className="buttons-container">
-          {isCreator && <button className="start-button">Start</button>}
+          {isCreator && (
+            <button onClick={handleStart} className="start-button">
+              Start
+            </button>
+          )}
           <button className="exit-button" onClick={handleExit}>
             Exit
           </button>
