@@ -20,8 +20,16 @@ const MainMenu = () => {
   return (
     <div>
       <div className="flex">
+        <h1>MAIN MENU</h1>
         <Card className="innerCard">
           <div className="buttonsDiv">
+            <Button
+              style={{ marginBottom: "1rem" }}
+              variant="contained"
+              onClick={() => navigate("/room/create")}
+            >
+              Create
+            </Button>
             <Button
               className="button1"
               style={{ marginBottom: "1rem" }}
@@ -29,13 +37,6 @@ const MainMenu = () => {
               variant="contained"
             >
               Join
-            </Button>
-            <Button
-              style={{ marginBottom: "1rem" }}
-              variant="contained"
-              onClick={() => navigate("/room/create")}
-            >
-              Create
             </Button>
             <Button
               className="logout"
@@ -47,20 +48,20 @@ const MainMenu = () => {
             </Button>
           </div>
 
-          <Card className="card">
+          <div className="card">
             <CardContent>
-              <h2>How to Play</h2>
+              <h1>How to Play</h1>
               <h3>
-                Have the other player guess one letter at a time - or he or she
-                can use a turn to guess the entire word or words. Fill in the
-                letter everywhere it appears on the appropriate dash or dashes
-                each time the person guesses correctly. Circle the letter on the
-                alphabet if is guessed correctly. Add one body part to the
-                drawing each time the letter chosen is not in the word. Begin by
-                drawing a head attached to the short vertical line the noose.
+                <ol>
+                  <li>Create/Join Room</li>
+                  <li>Start the game</li>
+                  <li>Guess the movie</li>
+                </ol>
               </h3>
+              <h2>That's it! Have fun! :)</h2>
+              
             </CardContent>
-          </Card>
+          </div>
         </Card>
       </div>
     </div>

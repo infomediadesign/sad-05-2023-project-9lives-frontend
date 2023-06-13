@@ -16,10 +16,26 @@ const AppProvider = (props) => {
     id: JSON.parse(localStorage.getItem("loggedInUser"))?._id ?? "",
     email: JSON.parse(localStorage.getItem("loggedInUser"))?.email ?? "",
   });
-  
+
+  const [roomDetails, setRoomDetails] = useState({
+    players: [],
+    setting: { maxPlayers: null, rounds: null },
+  });
+
+  const [socket, setSocket] = useState(null);
+
   return (
     <AppContext.Provider
-      value={{ auth, setAuth, setInLocalStorage, removeFromLocalStorage }}
+      value={{
+        auth,
+        setAuth,
+        setInLocalStorage,
+        removeFromLocalStorage,
+        roomDetails,
+        setRoomDetails,
+        socket,
+        setSocket,
+      }}
     >
       {props.children}
     </AppContext.Provider>
