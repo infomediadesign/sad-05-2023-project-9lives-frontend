@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+// import Header from "./components/Header/Header";
+import HandleRoutes from "./components/HandleRoutes";
+import { useJwt } from "react-jwt";
+import { useGlobalContext } from "./utils/Hooks/context";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const { auth, removeFromLocalStorage, setAuth } = useGlobalContext();
+  const { isExpired } = useJwt(auth.token);
+  useEffect(() => {
+    if (isExpired) {
+      removeFromLocalStorage();
+      setAuth({ token: "" });
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {/* <Header /> */}
+      <HandleRoutes />
     </div>
   );
-}
+};
 
 export default App;

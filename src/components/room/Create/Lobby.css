@@ -1,0 +1,40 @@
+.lobby-play {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+}
+
+.lobby-section {
+  display: flex;
+  flex-direction: column;
+  padding-right: 50px;
+  border-right: 2px solid white;
+  width: 20%;
+  box-sizing: content-box;
+}
+
+.room-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.lobby-heading {
+  text-align: left;
+}
+
+.buttons-container {
+  /* grid-column: 3;  */
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+  margin-top: 20px;
+  gap: 10px
+}
+
+.play-section {
+  display: flex;
+  flex-grow: 1;
+}
