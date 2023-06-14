@@ -2,9 +2,9 @@ name: DEPLOY TO DOCKERHUB FOR FRONTEND
 
 on:
   push:
-    branches: ["main"]
+    branches: ["dev"]
   pull_request:
-    branches: ["main"]
+    branches: ["dev"]
 
 env:
   DOCKER_USER: ${{ secrets.DOCKER_USER }}
