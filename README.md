@@ -6,8 +6,8 @@ Link to the Repo: https://hub.docker.com/r/kishor97p/sad_05_2023_project_9lives
 This repository has the frontend code written in react.js for **NEKO NINE LIVES** application. Neko Nive live is a simple hangman game where multiple players can play together in a single room.
 
 This repository contains two submodules
-- Backend code (express/node)
-- registration code (flask/python)
+- [Backend code (express/node)](https://github.com/infomediadesign/sad-05-2023-project-9lives-backend)
+- [registration code (flask/python)](https://github.com/infomediadesign/sad-05-2023-project-9lives-registration-MS)
 
 To clone the repositry with submodules, use command `git clone --recurse-submodules https://github.com/infomediadesign/sad-05-2023-project-9lives-frontend.git`
 
