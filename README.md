@@ -1,6 +1,20 @@
 TO download Docker container directly from the Docker HUB -
 Link to the Repo: https://hub.docker.com/r/kishor97p/sad_05_2023_project_9lives
 
+# Before you clone the repository
+
+This repository has the frontend code written in react.js for **NEKO NINE LIVES** application. Neko Nive live is a simple hangman game where multiple players can play together in a single room.
+
+This repository contains two submodules
+- Backend code (express/node)
+- registration code (flask/python)
+
+To clone the repositry with submodules, use command `git clone --recurse-submodules https://github.com/infomediadesign/sad-05-2023-project-9lives-frontend.git`
+
+If you already cloned the repo without `--recurse-submodules`, run `git submodule update --init --recursive` command inside the cloned repo
+
+**NOTE**: Please refer **_main_** branch for the code, **_dev_** branch is the merger branch, all other working branches have been either deleted or marked inactive
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
